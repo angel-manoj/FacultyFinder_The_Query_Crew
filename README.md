@@ -46,6 +46,16 @@ This project implements an end-to-end data engineering pipeline that:
 | `journal_articles`  | Published journal articles |
 | `conference_papers` | Conference papers and presentations |
 
+---
+
+## Data Statistics
+
+Total Faculty Records: 109 faculty members
+
+Data Sources: 1 CSV file.
+
+Data Extraction Method:
+Faculty data was extracted from institutional web pages using Python’s BeautifulSoup library for HTML parsing, along with the requests library for HTTP communication.
 
 ### JSON Format (`data/raw_data.json`)
 
