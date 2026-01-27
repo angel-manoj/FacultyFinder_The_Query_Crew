@@ -143,10 +143,10 @@ BDE/
 - Cleans text fields (removes special characters, standardizes formatting)
 - Parses lists and arrays
 - Handles missing values
-
-### 3. Data Storage (`storage.ipynb`)
-- Saves data to CSV format (`data/raw_data.csv`)
 - Saves data to JSON format (`data/raw_data.json`)
+
+
+### 3. Data Storage (`db_setup.ipynb`)
 - Creates SQLite database schema
 - Inserts data into normalized database tables
 
