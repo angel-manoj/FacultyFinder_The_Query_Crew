@@ -113,6 +113,7 @@ BDE/
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # Readme file
 ├── .gitignore                 # Git ignore rules
+├── faculty.db                 # Database
 │
 ├── scripts/
 │   ├── Scraper.py            # Web scraping module
@@ -126,7 +127,6 @@ BDE/
 ├── logs/
 │   └── llm_usage.md          # LLM usage tracking
 │
-└── storage.ipynb             # Data storage and analysis notebook
 ```
 
 ---
