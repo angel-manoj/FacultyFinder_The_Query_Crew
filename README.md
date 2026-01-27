@@ -117,6 +117,7 @@ BDE/
 ├── scripts/
 │   ├── Scraper.py            # Web scraping module
 │   └── Transformation.ipynb   # Data transformation notebook
+│   └── db_setup.ipynb       # Load the data into Database
 │
 ├── data/
 │   ├── raw_data.csv          # CSV format data
