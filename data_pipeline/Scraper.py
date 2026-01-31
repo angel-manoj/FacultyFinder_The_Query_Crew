@@ -1,81 +1,204 @@
-"""FastAPI service exposing DA-IICT faculty records from SQLite.
+"""Web scraper utilities for the DA-IICT faculty pages.
 
-Provides endpoints to list all faculty and to search by `id` or `name`.
+This module contains small helper functions to fetch HTML pages,
+parse faculty cards and profile pages, and save the aggregated
+results to `data/raw_data.csv` by default.
 """
 
-from fastapi import FastAPI, Query
-import sqlite3
-from typing import Optional
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import time
 
-app = FastAPI()
 
-def get_db():
-    """Open and return a SQLite connection to the `faculty.db` file.
+URLS = [
+    "https://www.daiict.ac.in/faculty",
+    "https://www.daiict.ac.in/adjunct-faculty",
+    "https://www.daiict.ac.in/adjunct-faculty-international",
+    "https://www.daiict.ac.in/distinguished-professor",
+    "https://www.daiict.ac.in/professor-practice"
+]
 
-    The returned connection uses `sqlite3.Row` as the row factory so
-    rows can be converted directly into dict-like objects.
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Accept-Language": "en-US,en;q=0.9"
+}
 
-    Returns:
-        sqlite3.Connection: an open SQLite connection.
+
+def fetch(url):
+    """Fetch the HTML content for a URL.
+
+    Returns the response text on success or `None` on failure.
     """
-    conn = sqlite3.connect("faculty.db")
-    conn.row_factory = sqlite3.Row
-    return conn
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=10)
+        r.raise_for_status()
+        return r.text
+    except Exception as e:
+        print("Fetch error:", e)
+        return None
 
-@app.get("/faculty")
-def get_all_faculty():
-    """Return all rows from the `faculty` table as a list of dicts.
 
-    Connects to the local SQLite database, queries the `faculty`
-    table and returns the results in a JSON-serializable format.
+def extract_teaching(soup):
+    """Extract a list of teaching/course strings from a profile soup.
 
-    Returns:
-        list[dict]: all faculty records.
+    If no teaching entries are found the function returns the string
+    "Not Provided" to match the rest of the pipeline's expectations.
     """
-    conn = get_db()
-    cursor = conn.cursor()
+    teaching = []
+    li_tags = soup.select("div.work-exp ul li")
 
-    cursor.execute("SELECT * FROM faculty")
-    rows = cursor.fetchall()
+    if li_tags:
+        for li in li_tags:
+            text = li.get_text(" ", strip=True).replace("\xa0", " ")
+            if text:
+                teaching.append(text)
+    else:
+        for p in soup.select("div.work-exp p"):
+            if p.find("a"):
+                continue
+            text = p.get_text(" ", strip=True).replace("\xa0", " ")
+            if text:
+                teaching.append(text)
 
-    conn.close()
-    return [dict(row) for row in rows]
+    return teaching if teaching else "Not Provided"
+
+def extract_profile(profile_url):
+    """Given a profile URL, fetch and extract profile fields.
+
+    Returns a tuple: (bio, teaching, research_areas, personal_links, pubs_dict)
+    where `pubs_dict` contains keys `journals` and `conferences` or `None`.
+    """
+
+    html = fetch(profile_url)
+    if not html:
+        return None, None, None, None, None
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    bio_tag = soup.select_one("div.about p")
+    bio = bio_tag.get_text(strip=True) if bio_tag else None
+
+    teaching = extract_teaching(soup)
+
+    research_areas = None
+    li_tags = soup.select("div.work-exp1 li")
+    p_tags = soup.select("div.work-exp1 p")
+
+    if li_tags:
+        research_areas = [li.get_text(strip=True) for li in li_tags]
+    elif p_tags:
+        research_areas = [p.get_text(strip=True) for p in p_tags]
+
+    link_tag = soup.select_one("div.field--name-field-sites a")
+    personal_links = link_tag["href"] if link_tag else None
+
+    journals, conferences = [], []
+    pub_block = soup.select_one("div.education.overflowContent")
+
+    if pub_block:
+        for h in pub_block.find_all("h4"):
+            title = h.get_text(strip=True).lower()
+            ul = h.find_next_sibling("ul")
+
+            if not ul:
+                continue
+
+            papers = [
+                li.get_text(" ", strip=True).replace("\xa0", " ")
+                for li in ul.find_all("li")
+            ]
+
+            if "journal" in title:
+                journals = papers
+            elif "conference" in title:
+                conferences = papers
+
+    return bio, teaching, research_areas, personal_links, {
+        "journals": journals or None,
+        "conferences": conferences or None
+    }
 
 
-@app.get("/faculty/search")
-def search_faculty(
-    id: Optional[int] = Query(None, description="Faculty ID"),
-    name: Optional[str] = Query(None, description="Faculty name")
-):
-    """Search the `faculty` table by `id` and/or partial `name`.
+def scrape(url):
+    """Scrape a faculty listing page and return a list of records.
 
-    Both parameters are optional; when provided they are combined with
-    an AND in the WHERE clause. The `name` parameter performs a
-    case-insensitive LIKE match for convenience.
+    Each record is a dict matching the pipeline schema. If the page
+    cannot be fetched an empty list is returned.
+    """
+
+    html = fetch(url)
+    if not html:
+        return []
+
+    soup = BeautifulSoup(html, "html.parser")
+    cards = soup.find_all("div", class_="facultyDetails")
+
+    print("Scraping page | Faculty count:", len(cards))
+    data = []
+
+    for card in cards:
+        try:
+            name_tag = card.select_one("h3 a")
+            name = name_tag.get_text(strip=True)
+            profile = name_tag["href"]
+
+            education = card.select_one(".facultyEducation")
+            education = education.get_text(strip=True) if education else None
+
+            phone = card.select_one(".facultyNumber")
+            phone = phone.get_text(strip=True) if phone else None
+
+            address = card.select_one(".facultyAddress")
+            address = address.get_text(strip=True) if address else None
+
+            email = card.select_one(".facultyemail")
+            email = email.get_text(strip=True) if email else None
+
+            specialization = card.select_one(".areaSpecialization p")
+            specialization = specialization.get_text(strip=True) if specialization else None
+
+            bio, teaching, research_areas, personal_links, publications = extract_profile(profile)
+
+            data.append({
+                "name": name,
+                "profile": profile,
+                "education": education,
+                "phone": phone,
+                "address": address,
+                "email": email,
+                "specialization": specialization,
+                "personal_links": personal_links,
+                "bio": bio,
+                "teaching": teaching,
+                "research_areas": research_areas,
+                "journal_articles": publications["journals"] if publications else None,
+                "conference_papers": publications["conferences"] if publications else None,
+            })
+
+            time.sleep(0.7)
+
+        except Exception as e:
+            print("Error parsing card:", e)
+
+    return data
+
+def run_scraper(output_path="data/raw_data.csv"):
+    """Run the scraper over configured `URLS` and save results.
 
     Args:
-        id (int | None): faculty `id` to match exactly.
-        name (str | None): substring to match against `name`.
-
-    Returns:
-        list[dict]: matching faculty records.
+        output_path (str): path to write the CSV file (default: `data/raw_data.csv`).
     """
-    conn = get_db()
-    cursor = conn.cursor()
+    all_data = []
 
-    query = "SELECT * FROM faculty WHERE 1=1"
-    params = []
+    for url in URLS:
+        print(f"\nScraping URL: {url}")
+        all_data.extend(scrape(url))
 
-    if id is not None:
-        query += " AND id = ?"
-        params.append(id)
+    df = pd.DataFrame(all_data)
+    df.to_csv(output_path, index=False)
+    print(f"\nAll faculty data saved to {output_path}")
 
-    if name is not None:
-        query += " AND name LIKE ?"
-        params.append(f"%{name}%")
 
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
-
-    conn.close()
-    return [dict(row) for row in rows]
+if __name__ == "__main__":
+    run_scraper()
