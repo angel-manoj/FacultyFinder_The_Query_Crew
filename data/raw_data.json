@@ -246,10 +246,13 @@
             "Quantum Optics",
             "Technologies for Humanitarian Challenges."
         ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
+        "personal_links": "https://scholar.google.co.in/citations?hl=en&user=NLniVooAAAAJ&view_op=list_works",
+        "bio": "I am a faculty of DA-IICT, Gandhinagar (India) and am an alumnus of IIT Delhi and IIT Roorkee. I obtained my PhD degree in Physics from IIT Delhi in 1993. Prior to joining DA-IICT in 2003, I worked at Centre for Theoretical Studies at Indian Institute of Science, Bangalore (India) during 1993-94 followed by the Optical Fiber Group at IIT Delhi (India) till 1996. My main academic interest areas are sensors, Internet of Things, image processing, fiber optics, semiconductor physics, applications of technologies for humanitarian challenges.",
         "teaching": [
-            "Not Provided"
+            "Engineering Design Workshop (1st sem BTech Core course)",
+            "Engineered Materials (4th sem BTech Core course)",
+            "Electromagnetic Theory (3rd sem BTech Core course)",
+            "Solid State Devices (6th sem BTech Elective course)"
         ],
         "research_areas": "Not Provided",
         "journal_articles": 0,
@@ -291,7 +294,7 @@
             "Gait Analysis"
         ],
         "personal_links": "https://scholar.google.co.in/citations?hl=en&user=ChSHse0AAAAJ&view_op=list_works&sortby=pubdate",
-        "bio": "Dr. Ankit Vijayvargiya is currently serving as an Assistant Professor at DAU. He holds a Ph.D. in Artificial Intelligence in Healthcare from Malaviya National Institute of Technology (MNIT), Jaipur, where his research focused on AI-enabled solutions for human health, particularly in biomedical signal processing and human activity recognition.",
+        "bio": "Dr. Ankit Vijayvargiya is currently serving as an Assistant Professor at DAU. He holds a Ph.D. inArtificial Intelligence in Healthcarefrom Malaviya National Institute of Technology (MNIT), Jaipur, where his research focused on AI-enabled solutions for human health, particularly in biomedical signal processing and human activity recognition.",
         "teaching": [
             "Biomedical Signals",
             "Machine Learning",
@@ -414,6 +417,32 @@
         "conference_papers": 0
     },
     {
+        "name": "Arnab Bhabak",
+        "profile": "https://www.daiict.ac.in/faculty/arnab-bhabak",
+        "education": "PhD (Mathematics), IIT Guwahati",
+        "phone": "079-68261619",
+        "address": "4204, FB-4, DAU, Gandhinagar, Gujarat, India 382007",
+        "email": "arnab_bhabak@dau.ac.in",
+        "specialization": [
+            "Stochastic Control",
+            "Stochastic Game Theory",
+            "Probability Theory"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Myself Dr. Arnab Bhabak. I obtained my PhD degree in Mathematics from Indian Institute of Technology Guwahati, India. During my PhD, I worked on the Stochastic Control and Stochastic Game Theory. I did my Master's from Indian Institute of Technology Kanpur, India. Prior to this, I completed my Graduation in Mathematics as a Major from St. Xavier's College Kolkata, India. My primary work includes zero sum and non zero sum game problems for different dynamics viz., Markov chains, semi Markov processes, piecewise deterministic Markov chains.",
+        "teaching": [
+            "Stochastic Control",
+            "Stochastic Game Theory",
+            "Probability Theory",
+            "Stochastic Control",
+            "Stochastic Game Theory",
+            "Probability Theory"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
         "name": "Arnab Kumar Ray",
         "profile": "https://www.daiict.ac.in/faculty/arnab-kumar-ray",
         "education": "PhD (Physics), Jadavpur University, Kolkata",
@@ -512,6 +541,53 @@
             "D. Sain, K. Paul and A. Mal , A complete characterization of Birkhoff-James orthogonality in infinite dimensional normed space, J. Operator Theory, 80 (2018) 399-413."
         ],
         "conference_papers": 0
+    },
+    {
+        "name": "Arunava Chakravarty",
+        "profile": "https://www.daiict.ac.in/faculty/arunava-chakravarty",
+        "education": "PhD (Computer Science and Engineering), IIIT Hyderabad",
+        "phone": "079-68261542",
+        "address": "1201, FB-1, DAU, Gandhinagar, Gujarat, India 382007",
+        "email": "arunava_chakravarty@dau.ac.in",
+        "specialization": [
+            "Medical Image Analysis",
+            "Machine Learning for Healthcare",
+            "Computer Vision"
+        ],
+        "personal_links": "https://scholar.google.co.in/citations?user=Tk2svbAAAAAJ&hl=en",
+        "bio": "Arunava Chakravarty is currently serving as an Assistant Professor at Dhirubhai Ambani University (formerly DA-IICT), Gandhinagar, India.",
+        "teaching": [
+            "IE406 Machine Learning (ongoing)"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": [
+            "A. Chakravarty , T. Emre, O. Leingang, S. Riedl, J. Mai, H.P. Scholl, S. Sivaprasad, D. Rueckert, A. Lotery, U. Schmidt-Erfurth, H. Bogunovic, Morph-SSL: Self-Supervision with Longitudinal Morphing for Forecasting AMD Progression from OCT Volumes, IEEE Transactions on Medical Imaging, 2024, 43(9), pp.3224-3239.",
+            "T. Emre., A. Chakravarty , A.Rivail, D. Lachinov, O. Leingang, S. Riedl ... & H. Bogunović, 3DTINC: Time-Equivariant Non-Contrastive Learning for Predicting Disease Progression from Longitudinal OCTs, IEEE Transactions on Medical Imaging, 2024, 43(9), pp.3200-321.",
+            "D. Lachinov, A. Chakravarty , C. Grechenig, U. Schmidt-Erfurth, H. Bogunovic, Learning Spatio-temporal Model of Disease Progression with Neural-ODEs from Longitudinal Volumetric Data, IEEE Transactions on Medical Imaging, 2023, 43(3), pp.1165-1179.",
+            "A. Chakravarty , J. Sivaswamy, RACE-net: A Recurrent Neural Network for Biomedical Image Segmentation, IEEE Journal of Biomedical and Health Informatics, 2019, 23(3), pp.1151-1162.",
+            "A. Chakravarty , J. Sivaswamy, A Supervised Joint Multi-layer Segmentation Framework for Retinal Optical Coherence Tomography Images using Conditional Random Field, Computer Methods and Programs in Biomedicine, 2018, 165, pp.235-250.",
+            "A. Chakravarty , J. Sivaswamy, Joint optic disc and cup boundary extraction from monocular fundus images, Computer Methods and Programs in Biomedicine, 2017, 147, pp.51-61.",
+            "L. Chakrabarty, G.D. Joshi, A. Chakravarty , G.V. Raman, S.R. Krishnadas, Automated Detection of Glaucoma From Topographic Features of the Optic Nerve Head in Color Fundus Photographs, Journal of Glaucoma, 2016, 25(7), pp.590-597.",
+            "J. Sivaswamy, S.R. Krishnadas, A. Chakravarty , G.D. Joshi, et. al. A comprehensive retinal image dataset for the assessment of glaucoma from the optic nerve head analysis, JSM Journal of Biomedical Imaging Data Papers, 2015, 2(1), p.1004."
+        ],
+        "conference_papers": [
+            "A. Chakravarty , T. Emre, D. Lachinov, A. Rivail, H. Scholl, L. Fritsche, S. Sivaprasad, D. Rueckert, A. Lotery, U. Schmidt-Erfurth, H. Bogunović, Forecasting Disease Progression with Parallel Hyperplanes in Longitudinal Retinal OCT, Medical Image Computing and Computer-Assisted Intervention (MICCAI), 2024, pp. 273-283.",
+            "T. Emre, A. Chakravarty , D. Lachinov, A. Rivail, U. Schmidt-Erfurth, H. Bogunović, Learning Temporal Equivariance for Degenerative Disease Progression in OCT by Predicting Future Representations, Medical Image Computing and Computer-Assisted Intervention (MICCAI), 2024, pp. 196-206.",
+            "A. Chakravarty , T. Emre, D. Lachinov, A. Rivail, U. Schmidt-Erfurth, H. Bogunovic, Predicting the individual risk of AMD progression from retinal OCT with intra-subject temporal consistency, Medical Imaging in Deep Learning (MIDL), 2024, pp. 273-283.",
+            "T. Emre, A. Chakravarty, A. Rivail, S. Riedl, U. Schmidt-Erfurth, H. Bogunović, TINC: Temporally Informed Non-contrastive Learning for Disease Progression Modeling in Retinal OCT Volumes, International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI), 2022, pp. 625-634.",
+            "A. Chakravarty , A. Kar, R. Sethuraman, D. Sheet, Federated learning for site aware chest radiograph screening, IEEE International Symposium on Biomedical Imaging (ISBI), 2021, pp. 1077-1081.",
+            "A. Chakravarty , T. Sarkar, N. Ghosh, R. Sethuraman, D. Sheet, Learning Decision Ensemble using a Graph Neural Network for Comorbidity Aware Chest Radiograph Screening, International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2020, pp. 1234-1237.",
+            "A. Mitra, A. Chakravarty , N. Ghosh, T. Sarkar, R. Sethuraman, D. Sheet, A Systematic Search over Deep Convolutional Neural Network Architectures for Screening Chest Radiographs, International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2020, pp. 1225-1228.",
+            "S. Chandra, A. Chakravarty , N. Ghosh, T. Sarkar, R. Sethuraman, D. Sheet, A Two-Stage Multiple Instance Learning Framework for the Detection of Breast Cancer in Mammograms, International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC), 2020, pp. 1128-1131.",
+            "A. Chakravarty , Divya Jyothi Gaddipati, J. Sivaswamy, Construction of a Retinal Atlas for Macular OCT Volumes, International Conference on Image Analysis and Recognition (ICIAR), 2018, pp. 650-658.",
+            "A. Chakravarty , J. Sivaswamy, End-to-End Learning of a Conditional Random Field for Intra-retinal Layer Segmentation in Optical Coherence Tomography, Annual Conference on Medical Image Understanding and Analysis (MIUA), 2017, pp. 3-14.",
+            "A. Chakravarty , J. Sivaswamy, Glaucoma Classification with a Fusion of Segmentation and Image-based Features, International Symposium on Biomedical Imaging (ISBI), 2016, pp. 689-692.",
+            "Ujjwal, A. Chakravarty , J. Sivaswamy, An assistive annotation system for retinal images , International Symposium on Biomedical Imaging (ISBI), 2015, pp. 1506-1509.",
+            "A. Chakravarty, J. Sivaswamy, Coupled sparse dictionary for depth-based cup segmentation from single color fundus image , Medical Image Computing and Computer Assisted Intervention (MICCAI), 2014, pp. 747-754.",
+            "M.J.J.P. van Grinsven, A. Chakravarty , J. Sivaswamy, T. Theelen, et. al., A Bag of Words approach for discriminating between retinal images containing exudates or drusen , International Symposium on Biomedical Imaging (ISBI), 2013, pp. 1444-1447.",
+            "Ujjwal, K.S. Deepak, A. Chakravarty , J. Sivaswamy, Visual saliency based bright lesion detection and discrimination in retinal images , International Symposium on Biomedical Imaging (ISBI), 2013, pp. 1436-1439.",
+            "A. Chakravarty , J. Sivaswamy, A novel approach for quantification of retinal vessel tortuosity using quadratic polynomial decomposition , IEEE Indian Conference on Medical Informatics and Telemedicine (ICMIT), IIT Kharagpur, 2013, pp. 7-12."
+        ]
     },
     {
         "name": "Bharani Kollipara",
@@ -627,7 +703,7 @@
             "Probability and Statistics"
         ],
         "personal_links": "https://scholar.google.com/citations?user=cfJJeTcAAAAJ&hl=en",
-        "bio": "I have been an assistant professor at DA-IICT since July 2022. Before my current role, I was an adjunct faculty at the College of Aeronautics, Florida Tech, USA. I continued as a collaborative researcher in the Electrical and Computer Engineering department at the University of Central Florida, USA. I have over five years of postdoctoral research & teaching experience across institutions like NISER, SUTD, UCF, and FIT.",
+        "bio": "I have been an assistant professor at DA-IICT since July 2022. Before my current role, I was an adjunct faculty at theCollege of Aeronautics, Florida Tech, USA. I continued as a collaborative researcher in theElectrical and Computer Engineeringdepartment at the University of Central Florida, USA. I have over five years of postdoctoral research & teaching experience across institutions likeNISER,SUTD,UCF, andFIT.",
         "teaching": [
             "Discrete Mathematics (MC 123)",
             "Mathematical Statistics (MC 221)",
@@ -653,7 +729,7 @@
         "profile": "https://www.daiict.ac.in/faculty/hemant-patil",
         "education": "PhD (Computer Science), IIT Kharagpur",
         "phone": "079-68261650, Lab: 079-68261587",
-        "address": "Office: 4103, FB-4, DA-IICT, Gandhinagar, Gujarat, India 382007. Lab: CEP 006, Speech Lb, DA-IICT, Gandhinagar, Gujarat, India 382007",
+        "address": "Office: 4103, FB-4, DA-IICT, Gandhinagar, Gujarat, India 382007.Lab: CEP 006, Speech Lb, DA-IICT, Gandhinagar, Gujarat, India 382007",
         "email": "hemant_patil@dau.ac.in, hemant_patil1977@yahoo.com",
         "specialization": [
             "Speech Signal Processing",
@@ -1426,7 +1502,7 @@
             "Memristor-based Neuromorphi…"
         ],
         "personal_links": "https://sites.google.com/view/rutumparekh/home?authuser=1",
-        "bio": "Dr. Rutu Parekh is an Associate Professor at School of Technology, DAU, Gandhinagar, India, with over a decade of experience in VLSI design, nanoelectronics, embedded systems, and IoT applications. She completed her M.Tech in Electrical Engineering from Concordia University, Canada, her Ph.D. in Electrical Engineering from Université de Sherbrooke, Canada, and was a Postdoctoral Fellow at the Centre of Excellence in Nanoelectronics, IIT Bombay.",
+        "bio": "Dr. Rutu Parekhis an Associate Professor at School of Technology, DAU, Gandhinagar, India, with over a decade of experience in VLSI design, nanoelectronics, embedded systems, and IoT applications. She completed her M.Tech in Electrical Engineering from Concordia University, Canada, her Ph.D. in Electrical Engineering from Université de Sherbrooke, Canada, and was a Postdoctoral Fellow at the Centre of Excellence in Nanoelectronics, IIT Bombay.",
         "teaching": [
             "Nanoelectronics",
             "ASIC Design",
@@ -1844,7 +1920,7 @@
             "Algebraic combinatorics"
         ],
         "personal_links": "https://sites.google.com/view/sudipbera",
-        "bio": "I am an Assistant Professor from 02nd January, 2023-Present in the Department of Mathematics, DA-IICT, Gandhinagar, Gujrat India. Earlier, I was a Postdoctoral fellow in Mathematics at Harish-Chandra Research Institute from 16th September, 2022 to 31st December, 2022. Before that, I was a Visiting fellow in Mathematics at TIFR Mumbai from 2nd August, 2022 to 15th September, 2022. My mentor was Prof. Amitava Bhattacharya. Before that, I was a Postdoctoral fellow in Mathematics at IISc, Bangalore from 1st July, 2019 to 30th June, 2022. My mentor was Prof. Arvind Ayyer. I finished my Ph.D in Visva-Bharati University. I defended my Ph.D. thesis in June, 2019.",
+        "bio": "I am an Assistant Professor from 02ndJanuary, 2023-Present in the Department of Mathematics, DA-IICT, Gandhinagar, Gujrat India. Earlier, I was a Postdoctoral fellow in Mathematics at Harish-Chandra Research Institute from 16thSeptember, 2022 to 31stDecember, 2022. Before that, I was a Visiting fellow in Mathematics at TIFR Mumbai from 2ndAugust, 2022 to 15thSeptember, 2022. My mentor was Prof. Amitava Bhattacharya. Before that, I was a Postdoctoral fellow in Mathematics at IISc, Bangalore from 1stJuly, 2019 to 30thJune, 2022. My mentor was Prof. Arvind Ayyer. I finished my Ph.D in Visva-Bharati University. I defended my Ph.D. thesis in June, 2019.",
         "teaching": [
             "Linear Algebra",
             "An introduction to modern algebra",
@@ -2085,331 +2161,6 @@
             "Introduction to Communication Systems",
             "Advanced Digital Communications",
             "Next Generation Communication Systems"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Anil Maheshwari",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/anil-maheshwari",
-        "education": "PhD, TIFR Bombay",
-        "phone": "Not Available",
-        "address": "Not Available",
-        "email": "anil_maheshwari@dau.ac.in",
-        "specialization": [
-            "Design",
-            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
-            "Graph Theory",
-            "Discrete Mathematics",
-            "and Data Science."
-        ],
-        "personal_links": "https://carleton.ca/scs/people/anil-maheshwari/",
-        "bio": "Dr. Maheshwari received his bachelor's and master's from Birla Institute of Technology and Sciences and his Ph.D. from Tata Institute of Fundamental Research in India. He was a postdoctoral fellow at the Max-Planck Institute for Computer Science in Saarbrücken, Germany from 1993-94 and Research Associate at Carleton from 1994-95. He joined the School of Computer Science as an Assistant Professor in 1996 and has been a professor with the school since 2007.",
-        "teaching": [
-            "Design",
-            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
-            "Graph Theory",
-            "Discrete Mathematics",
-            "and Data Science.",
-            "Design",
-            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
-            "Graph Theory",
-            "Discrete Mathematics",
-            "and Data Science.",
-            "Dr. Maheshwari works in the field of design",
-            "analysis",
-            "and implementation of sequential",
-            "parallel",
-            "and external memory algorithms for problems arising in Computational Geometry",
-            "Graph Theory",
-            "and Data Science. Recently",
-            "he has been looking into problems related to geometric graphs",
-            "geometric location analysis and shortest path problems. His research work in geometric graphs is centred around the theme of establishing graph theoretic and geometric properties of the underlying spatial configuration",
-            "and use them to design efficient algorithmic solutions. The graph theoretic properties of interests are connectivity",
-            "bi-connectivity",
-            "spanning properties",
-            "diameter",
-            "planarity",
-            "perfect and bottleneck matchings",
-            "Hamiltonian cycle",
-            "separators",
-            "independent sets",
-            "vertex and edge colourings. The geometric graphs of particular interest are spanners",
-            "unit-disk graphs",
-            "plane graphs",
-            "proximity graphs",
-            "Delaunay triangulations and its variants. In geometric location analysis",
-            "he studies various algorithm design questions related to finding the best location to place facilities. In geometric path problems",
-            "he looks at variants and applications of shortest path problems in two and three-dimensions. The above three areas are interrelated. Often a geometric problem is transformed into a graph problem",
-            "and by exploiting the geometric structure a faster algorithm for the graph problem is obtained. Geometric spanners are main ingredients used in designing efficient algorithms for geometric path problems. This",
-            "in turn",
-            "requires the construction of spanners having useful structural properties. Matching in geometric graphs helps in understanding and discovering combinatorial and geometric structures inherent in these graphs. In location analysis problems",
-            "the underlying geometric structure with graph-theoretic techniques is exploited to design faster algorithms."
-        ],
-        "research_areas": "Design, Analysis and Implementation of Algorithms for Problems arising in Computational Geometry, Graph Theory, Discrete Mathematics, and Data Science.",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Anthony R. Noerpel",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/anthony-r-noerpel",
-        "education": "MSc (Electrical Engineering), New Jersey Institute of Technology, USA",
-        "phone": "Not Available",
-        "address": "Not Available",
-        "email": "anthony_noerpel@dau.ac.in",
-        "specialization": [
-            "Cellular and Satellite Communication System Design",
-            "RF Propagation",
-            "Earth Systems Sciences."
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Cellular and Satellite Communication System Design",
-            "RF Propagation",
-            "Earth Systems Sciences.",
-            "Cellular and Satellite Communication System Design",
-            "RF Propagation",
-            "Earth Systems Sciences."
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Gabriella Pasi",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/gabriella-pasi",
-        "education": "PhD (Computer Science), University of Rennes, France",
-        "phone": "Adjunct Chair",
-        "address": "Not Available",
-        "email": "gabriella_pasi@dau.ac.in",
-        "specialization": [
-            "Information Retrieval",
-            "Information Filtering",
-            "Data Science",
-            "Fuzzy Logic"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Information Retrieval",
-            "Information Filtering",
-            "Data Science",
-            "Fuzzy Logic",
-            "Information Retrieval",
-            "Information Filtering",
-            "Data Science",
-            "Fuzzy Logic"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Gaurav Sharma",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/gaurav-sharma",
-        "education": "nan",
-        "phone": "Not Available",
-        "address": "Professor of Electrical and Computer Engineering, University of Rochester, CSB 725, Box 270231, Rochester, NY 14627-0231 USA",
-        "email": "gaurav.sharma@rochester.edu",
-        "specialization": [
-            "Data Analytics",
-            "Cyber Physical Systems",
-            "Signal and Image Processing",
-            "Computer Vision",
-            "Media Security",
-            "Communications"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Data Analytics",
-            "Cyber Physical Systems",
-            "Signal and Image Processing",
-            "Computer Vision",
-            "Media Security",
-            "Communications",
-            "Data Analytics",
-            "Cyber Physical Systems",
-            "Signal and Image Processing",
-            "Computer Vision",
-            "Media Security",
-            "Communications"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Nicholas Belkin",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/nicholas-belkin",
-        "education": "PhD (Information Studies), University College, University of London",
-        "phone": "Adjunct Chair",
-        "address": "Not Available",
-        "email": "nicholas_belkin@dau.ac.in",
-        "specialization": [
-            "Information Retrieval",
-            "and Interaction Design"
-        ],
-        "personal_links": "https://wp.comminfo.rutgers.edu/belkin/",
-        "bio": "Not Provided",
-        "teaching": [
-            "Information Retrieval",
-            "and Interaction Design",
-            "Information Retrieval",
-            "and Interaction Design"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Nilotpal Chakravarti",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/nilotpal-chakravarti",
-        "education": "PhD (Combinatorics and Optimization), University of Waterloo, USA",
-        "phone": "Not Available",
-        "address": "Not Available",
-        "email": "nilotpal_chakravarti@dau.ac.in",
-        "specialization": [
-            "Not Available"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Not Provided"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Ranjan Pal",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/ranjan-pal",
-        "education": "PhD (Computer Science), Provost PhD Fellow (Highest Graduate Honor), University of Southern California (USC), Los Angeles, California, USA",
-        "phone": "Adjunct Chair",
-        "address": "Not Available",
-        "email": "ranjanpal9@gmail.com, ranjanp@mit.edu",
-        "specialization": [
-            "Cyber Risk Management",
-            "Cyber Resilience",
-            "Cybersecurity",
-            "Decision Science",
-            "Algorithmics",
-            "Applied Probability"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Cyber Risk Management",
-            "Cyber Resilience",
-            "Cybersecurity",
-            "Decision Science",
-            "Algorithmics",
-            "Applied Probability",
-            "Cyber Risk Management",
-            "Cyber Resilience",
-            "Cybersecurity",
-            "Decision Science",
-            "Algorithmics",
-            "Applied Probability"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Rita Chakravarti",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/rita-chakravarti",
-        "education": "PhD (Multivariate Analysis), University of Pittsburgh",
-        "phone": "Not Available",
-        "address": "Not Available",
-        "email": "rita_chakravarti@dau.ac.in",
-        "specialization": [
-            "Not Available"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Not Provided"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "S. Lakshmivarahan",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/s-lakshmivarahan",
-        "education": "PhD (Electrical Engineering), Indian Institute of Science, Bangalore",
-        "phone": "Not Available",
-        "address": "Not Available",
-        "email": "s_lakshmivarahan@dau.ac.in",
-        "specialization": [
-            "Big Data Analytics",
-            "Dynamic Data Assimilation and Its Applications",
-            "Multi-Agent Dynamics and Network Science",
-            "Interconnection Networks for Parallel Computers",
-            "Learning Algorithms and Computational Finance."
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Big Data Analytics",
-            "Dynamic Data Assimilation and Its Applications",
-            "Multi-Agent Dynamics and Network Science",
-            "Interconnection Networks for Parallel Computers",
-            "Learning Algorithms and Computational Finance.",
-            "Big Data Analytics",
-            "Dynamic Data Assimilation and Its Applications",
-            "Multi-Agent Dynamics and Network Science",
-            "Interconnection Networks for Parallel Computers",
-            "Learning Algorithms and Computational Finance."
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Stefano Mizzaro",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/stefano-mizzaro",
-        "education": "PhD (Information Engineering), University of Trieste, Italy",
-        "phone": "Chair Adjunct Professor",
-        "address": "Not Available",
-        "email": "mizzaro@uniud.it",
-        "specialization": [
-            "Information Retrieval",
-            "Artificial Intelligence"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Information Retrieval",
-            "Artificial Intelligence",
-            "Information Retrieval",
-            "Artificial Intelligence"
-        ],
-        "research_areas": "Not Provided",
-        "journal_articles": 0,
-        "conference_papers": 0
-    },
-    {
-        "name": "Thomas Mandl",
-        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/thomas-mandl",
-        "education": "PhD (Information Science), University of Hildesheim, Germany",
-        "phone": "Adjunct Chair",
-        "address": "Not Available",
-        "email": "thomas_mandl@dau.ac.in",
-        "specialization": [
-            "Information Science",
-            "Cognitive Similarity Learning in Information Retrieval and Information Management"
-        ],
-        "personal_links": "Not Provided",
-        "bio": "Not Provided",
-        "teaching": [
-            "Information Science",
-            "Cognitive Similarity Learning in Information Retrieval and Information Management",
-            "Information Science",
-            "Cognitive Similarity Learning in Information Retrieval and Information Management"
         ],
         "research_areas": "Not Provided",
         "journal_articles": 0,
@@ -2771,9 +2522,9 @@
     {
         "name": "Kripabandhu Ghosh",
         "profile": "https://www.daiict.ac.in/adjunct-faculty/kripabandhu-ghosh",
-        "education": "nan",
+        "education": null,
         "phone": "Not Available",
-        "address": "Department of Computational and Data Sciences, Indian Institute of Science Education and Research (IISER) Kolkata",
+        "address": "Department of Computational and Data Sciences,Indian Institute of Science Education and Research (IISER) Kolkata",
         "email": "kripaghosh@iiserkol.ac.in",
         "specialization": [
             "Information Retrieval/Data Mining/AI on Legal Domain"
@@ -2823,7 +2574,7 @@
         "specialization": [
             "Economics",
             "Psychology",
-            "Soft skills. Certifications in Basic counseling course Counseling development program (CDP)",
+            "Soft skills.Certifications in Basic counseling course Counseling development program (CDP)",
             "Advanced counseling course (ADP)",
             "Theoretical and experiential training on Fundamentals of Cognitive Behavior Therapy (CBT)…"
         ],
@@ -3106,13 +2857,392 @@
         "address": "Not Available",
         "email": "umang_shah@dau.ac.in",
         "specialization": [
-            "a. Integrated Interdisciplinary Design b. Design and Technology c. Aesthetic Detailings and Manufacturing d. Radical and Incremental Innovation."
+            "a.Integrated Interdisciplinary Designb.Design and Technologyc.Aesthetic Detailings and Manufacturingd.Radical and Incremental Innovation."
         ],
         "personal_links": "Not Provided",
         "bio": "Not Provided",
         "teaching": [
             "a. Integrated Interdisciplinary Design b. Design and Technology c. Aesthetic Detailings and Manufacturing d. Radical and Incremental Innovation.",
             "a. Integrated Interdisciplinary Design b. Design and Technology c. Aesthetic Detailings and Manufacturing d. Radical and Incremental Innovation."
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Anil Maheshwari",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/anil-maheshwari",
+        "education": "PhD, TIFR Bombay",
+        "phone": "Not Available",
+        "address": "Not Available",
+        "email": "anil_maheshwari@dau.ac.in",
+        "specialization": [
+            "Design",
+            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
+            "Graph Theory",
+            "Discrete Mathematics",
+            "and Data Science."
+        ],
+        "personal_links": "https://carleton.ca/scs/people/anil-maheshwari/",
+        "bio": "Dr. Maheshwari received his bachelor's and master's from Birla Institute of Technology and Sciences and his Ph.D. from Tata Institute of Fundamental Research in India. He was a postdoctoral fellow at the Max-Planck Institute for Computer Science in Saarbrücken, Germany from 1993-94 and Research Associate at Carleton from 1994-95. He joined the School of Computer Science as an Assistant Professor in 1996 and has been a professor with the school since 2007.",
+        "teaching": [
+            "Design",
+            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
+            "Graph Theory",
+            "Discrete Mathematics",
+            "and Data Science.",
+            "Design",
+            "Analysis and Implementation of Algorithms for Problems arising in Computational Geometry",
+            "Graph Theory",
+            "Discrete Mathematics",
+            "and Data Science.",
+            "Dr. Maheshwari works in the field of design",
+            "analysis",
+            "and implementation of sequential",
+            "parallel",
+            "and external memory algorithms for problems arising in Computational Geometry",
+            "Graph Theory",
+            "and Data Science. Recently",
+            "he has been looking into problems related to geometric graphs",
+            "geometric location analysis and shortest path problems. His research work in geometric graphs is centred around the theme of establishing graph theoretic and geometric properties of the underlying spatial configuration",
+            "and use them to design efficient algorithmic solutions. The graph theoretic properties of interests are connectivity",
+            "bi-connectivity",
+            "spanning properties",
+            "diameter",
+            "planarity",
+            "perfect and bottleneck matchings",
+            "Hamiltonian cycle",
+            "separators",
+            "independent sets",
+            "vertex and edge colourings. The geometric graphs of particular interest are spanners",
+            "unit-disk graphs",
+            "plane graphs",
+            "proximity graphs",
+            "Delaunay triangulations and its variants. In geometric location analysis",
+            "he studies various algorithm design questions related to finding the best location to place facilities. In geometric path problems",
+            "he looks at variants and applications of shortest path problems in two and three-dimensions. The above three areas are interrelated. Often a geometric problem is transformed into a graph problem",
+            "and by exploiting the geometric structure a faster algorithm for the graph problem is obtained. Geometric spanners are main ingredients used in designing efficient algorithms for geometric path problems. This",
+            "in turn",
+            "requires the construction of spanners having useful structural properties. Matching in geometric graphs helps in understanding and discovering combinatorial and geometric structures inherent in these graphs. In location analysis problems",
+            "the underlying geometric structure with graph-theoretic techniques is exploited to design faster algorithms."
+        ],
+        "research_areas": "Design, Analysis and Implementation of Algorithms for Problems arising in Computational Geometry, Graph Theory, Discrete Mathematics, and Data Science.",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Anthony R. Noerpel",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/anthony-r-noerpel",
+        "education": "MSc (Electrical Engineering), New Jersey Institute of Technology, USA",
+        "phone": "Not Available",
+        "address": "Not Available",
+        "email": "anthony_noerpel@dau.ac.in",
+        "specialization": [
+            "Cellular and Satellite Communication System Design",
+            "RF Propagation",
+            "Earth Systems Sciences."
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Cellular and Satellite Communication System Design",
+            "RF Propagation",
+            "Earth Systems Sciences.",
+            "Cellular and Satellite Communication System Design",
+            "RF Propagation",
+            "Earth Systems Sciences."
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Gabriella Pasi",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/gabriella-pasi",
+        "education": "PhD (Computer Science), University of Rennes, France",
+        "phone": "Adjunct Chair",
+        "address": "Not Available",
+        "email": "gabriella_pasi@dau.ac.in",
+        "specialization": [
+            "Information Retrieval",
+            "Information Filtering",
+            "Data Science",
+            "Fuzzy Logic"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Information Retrieval",
+            "Information Filtering",
+            "Data Science",
+            "Fuzzy Logic",
+            "Information Retrieval",
+            "Information Filtering",
+            "Data Science",
+            "Fuzzy Logic"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Gaurav Sharma",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/gaurav-sharma",
+        "education": null,
+        "phone": "Not Available",
+        "address": "Professor of Electrical and Computer Engineering,University of Rochester, CSB 725, Box 270231,Rochester, NY 14627-0231 USA",
+        "email": "gaurav.sharma@rochester.edu",
+        "specialization": [
+            "Data Analytics",
+            "Cyber Physical Systems",
+            "Signal and Image Processing",
+            "Computer Vision",
+            "Media Security",
+            "Communications"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Data Analytics",
+            "Cyber Physical Systems",
+            "Signal and Image Processing",
+            "Computer Vision",
+            "Media Security",
+            "Communications",
+            "Data Analytics",
+            "Cyber Physical Systems",
+            "Signal and Image Processing",
+            "Computer Vision",
+            "Media Security",
+            "Communications"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Nicholas Belkin",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/nicholas-belkin",
+        "education": "PhD (Information Studies), University College, University of London",
+        "phone": "Adjunct Chair",
+        "address": "Not Available",
+        "email": "nicholas_belkin@dau.ac.in",
+        "specialization": [
+            "Information Retrieval",
+            "and Interaction Design"
+        ],
+        "personal_links": "https://wp.comminfo.rutgers.edu/belkin/",
+        "bio": "Not Provided",
+        "teaching": [
+            "Information Retrieval",
+            "and Interaction Design",
+            "Information Retrieval",
+            "and Interaction Design"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Nilotpal Chakravarti",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/nilotpal-chakravarti",
+        "education": "PhD (Combinatorics and Optimization), University of Waterloo, USA",
+        "phone": "Not Available",
+        "address": "Not Available",
+        "email": "nilotpal_chakravarti@dau.ac.in",
+        "specialization": [
+            "Not Available"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Not Provided"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Ranjan Pal",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/ranjan-pal",
+        "education": "PhD (Computer Science), Provost PhD Fellow (Highest Graduate Honor), University of Southern California (USC), Los Angeles, California, USA",
+        "phone": "Adjunct Chair",
+        "address": "Not Available",
+        "email": "ranjanpal9@gmail.com, ranjanp@mit.edu",
+        "specialization": [
+            "Cyber Risk Management",
+            "Cyber Resilience",
+            "Cybersecurity",
+            "Decision Science",
+            "Algorithmics",
+            "Applied Probability"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Cyber Risk Management",
+            "Cyber Resilience",
+            "Cybersecurity",
+            "Decision Science",
+            "Algorithmics",
+            "Applied Probability",
+            "Cyber Risk Management",
+            "Cyber Resilience",
+            "Cybersecurity",
+            "Decision Science",
+            "Algorithmics",
+            "Applied Probability"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Rita Chakravarti",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/rita-chakravarti",
+        "education": "PhD (Multivariate Analysis), University of Pittsburgh",
+        "phone": "Not Available",
+        "address": "Not Available",
+        "email": "rita_chakravarti@dau.ac.in",
+        "specialization": [
+            "Not Available"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Not Provided"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "S. Lakshmivarahan",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/s-lakshmivarahan",
+        "education": "PhD (Electrical Engineering), Indian Institute of Science, Bangalore",
+        "phone": "Not Available",
+        "address": "Not Available",
+        "email": "s_lakshmivarahan@dau.ac.in",
+        "specialization": [
+            "Big Data Analytics",
+            "Dynamic Data Assimilation and Its Applications",
+            "Multi-Agent Dynamics and Network Science",
+            "Interconnection Networks for Parallel Computers",
+            "Learning Algorithms and Computational Finance."
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Big Data Analytics",
+            "Dynamic Data Assimilation and Its Applications",
+            "Multi-Agent Dynamics and Network Science",
+            "Interconnection Networks for Parallel Computers",
+            "Learning Algorithms and Computational Finance.",
+            "Big Data Analytics",
+            "Dynamic Data Assimilation and Its Applications",
+            "Multi-Agent Dynamics and Network Science",
+            "Interconnection Networks for Parallel Computers",
+            "Learning Algorithms and Computational Finance."
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Stefano Mizzaro",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/stefano-mizzaro",
+        "education": "PhD (Information Engineering), University of Trieste, Italy",
+        "phone": "Chair Adjunct Professor",
+        "address": "Not Available",
+        "email": "mizzaro@uniud.it",
+        "specialization": [
+            "Information Retrieval",
+            "Artificial Intelligence"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Information Retrieval",
+            "Artificial Intelligence",
+            "Information Retrieval",
+            "Artificial Intelligence"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Thomas Mandl",
+        "profile": "https://www.daiict.ac.in/adjunct-faculty-international/thomas-mandl",
+        "education": "PhD (Information Science), University of Hildesheim, Germany",
+        "phone": "Adjunct Chair",
+        "address": "Not Available",
+        "email": "thomas_mandl@dau.ac.in",
+        "specialization": [
+            "Information Science",
+            "Cognitive Similarity Learning in Information Retrieval and Information Management"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Information Science",
+            "Cognitive Similarity Learning in Information Retrieval and Information Management",
+            "Information Science",
+            "Cognitive Similarity Learning in Information Retrieval and Information Management"
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Jayanth Varma",
+        "profile": "https://www.daiict.ac.in/distinguished-professor/jayanth-varma",
+        "education": "Doctorate in Management, IIM Ahmedabad",
+        "phone": "079-68261679",
+        "address": "2208, FB-2, DAU, Gandhinagar, Gujarat, India 382007",
+        "email": "jayanth_varma@dau.ac.in",
+        "specialization": [
+            "Financial Markets and Pricing Models",
+            "The Financial Sector",
+            "International Finance",
+            "and Quantitative Modeling."
+        ],
+        "personal_links": "https://www.jrvarma.in/",
+        "bio": "Prof. Jayanth R. Varmahas extensive experience in financial markets, regulation, and academia; he has served on the RBI Monetary Policy Committee, been a member of SEBI, chaired multiple regulatory committees, held board positions in major organizations, and taught courses on capital markets, risk management, and corporate finance.",
+        "teaching": [
+            "Financial Markets and Pricing Models",
+            "The Financial Sector",
+            "International Finance",
+            "and Quantitative Modeling.",
+            "Financial Markets and Pricing Models",
+            "The Financial Sector",
+            "International Finance",
+            "and Quantitative Modeling."
+        ],
+        "research_areas": "Not Provided",
+        "journal_articles": 0,
+        "conference_papers": 0
+    },
+    {
+        "name": "Vishvajit Pandya",
+        "profile": "https://www.daiict.ac.in/distinguished-professor/vishvajit-pandya",
+        "education": "PhD (Anthropology), University of Chicago, USA",
+        "phone": "079-68261543",
+        "address": "2105, FB-2, DA-IICT, Gandhinagar, Gujarat, India 382007",
+        "email": "vishvajit_pandya@dau.ac.in",
+        "specialization": [
+            "Material Culture",
+            "Design and Communication Culture",
+            "Visual Anthropology",
+            "Anthropology of Space",
+            "Rituals and History with specific reference to Colonialism South East Asia"
+        ],
+        "personal_links": "Not Provided",
+        "bio": "Not Provided",
+        "teaching": [
+            "Culture and Communication",
+            "Ethnographic: Methods",
+            "Research Narratives"
         ],
         "research_areas": "Not Provided",
         "journal_articles": 0,
@@ -3127,7 +3257,7 @@
         "email": "ajay_tomar@dau.ac.in",
         "specialization": [
             "Mr. Ajay Tomar was retired as the Commissioner of Police",
-            "Surat. He was recipient of Police Medal For Meritorious Service 2005 and also the President's Medal For Distinguished Service-2014. KNOW MORE"
+            "Surat. He was recipient of Police Medal For Meritorious Service 2005 and also the President's Medal For Distinguished Service-2014.KNOW MORE"
         ],
         "personal_links": "Not Provided",
         "bio": "Not Provided",
