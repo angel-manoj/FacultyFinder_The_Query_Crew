@@ -6,8 +6,14 @@ import json
 
 def run_transformation(
     input_csv="./data/raw_data.csv",
-    output_json="./data/raw_data.json"
+    output_csv="./data/clean_faculty_data.csv",
+    output_json="./data/clean_faculty_data.json"
 ):
+    """
+    Load raw CSV, clean fields, and save cleaned data
+    as both CSV (for EDA) and JSON (for downstream use).
+    """
+
     # =========================
     # 1. LOAD DATA
     # =========================
@@ -25,13 +31,10 @@ def run_transformation(
         "teaching": "Not Provided",
         "personal_links": "Not Provided",
         "research_areas": "Not Provided",
-        "journal_articles": "0",
-        "conference_papers": "0"
+        "publications": "[]"
     }, inplace=True)
 
-    # ========================
-    # Remove Extra Space
-    # =======================
+    # Remove extra whitespace
     for col in df.columns:
         df[col] = df[col].astype(str).str.strip()
 
@@ -95,7 +98,7 @@ def run_transformation(
             item = item.replace("\xa0", " ").strip()
             item_lower = item.lower()
 
-            if re.search(r'https?://|www\.', item):
+            if re.search(r"https?://|www\.", item):
                 continue
 
             if any(b in item_lower for b in BLACKLIST):
@@ -108,18 +111,21 @@ def run_transformation(
     df["teaching"] = df["teaching"].apply(clean_teaching_list)
 
     # =========================
-    # 7. FIX LIST COLUMNS
+    # 7. FIX PUBLICATIONS LIST
     # =========================
     def fix_list(x):
+        if pd.isna(x):
+            return []
         if isinstance(x, str):
             try:
                 return ast.literal_eval(x)
             except Exception:
-                return x
-        return x
+                return []
+        if isinstance(x, list):
+            return x
+        return []
 
-    df["journal_articles"] = df["journal_articles"].apply(fix_list)
-    df["conference_papers"] = df["conference_papers"].apply(fix_list)
+    df["publications"] = df["publications"].apply(fix_list)
 
     # =========================
     # 8. RESEARCH AREAS CLEANING
@@ -144,13 +150,45 @@ def run_transformation(
     )
 
     # =========================
-    # 9. SAVE JSON
+    # 9. CREATE EMBEDDING COLUMN
     # =========================
-    df.to_json(output_json, orient="records", indent=2)
-    print("Saved as JSON successfully!")
+    def build_embedding_text(row):
+        parts = []
+
+        if isinstance(row["specialization"], list):
+            parts.append(" ".join(row["specialization"]))
+        elif row["specialization"] not in ["Not Available", "Not Provided"]:
+            parts.append(row["specialization"])
+
+        if row["bio"] not in ["Not Available", "Not Provided"]:
+            parts.append(row["bio"])
+
+        if isinstance(row["teaching"], list):
+            parts.append(" ".join(row["teaching"]))
+        elif row["teaching"] not in ["Not Available", "Not Provided"]:
+            parts.append(row["teaching"])
+
+        if row["research_areas"] not in ["Not Available", "Not Provided"]:
+            parts.append(row["research_areas"])
+
+        return " ".join(parts).strip()
+
+    df["embedding_text"] = df.apply(build_embedding_text, axis=1)
 
     # =========================
-    # 10. DEEP TEXT CLEANING
+    # 10. SAVE CLEAN CSV (FOR EDA)
+    # =========================
+    df.to_csv(output_csv, index=False)
+    print(f"Clean CSV saved → {output_csv}")
+
+    # =========================
+    # 11. SAVE JSON
+    # =========================
+    df.to_json(output_json, orient="records", indent=2)
+    print(f"JSON saved → {output_json}")
+
+    # =========================
+    # 12. DEEP TEXT CLEANING (JSON)
     # =========================
     REPLACEMENTS = {
         r"\\xa0": " ",
@@ -186,7 +224,7 @@ def run_transformation(
     data = deep_clean(data)
 
     with open(output_json, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
     print("Cleaned JSON saved successfully!")
 

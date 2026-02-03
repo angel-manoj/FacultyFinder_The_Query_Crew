@@ -46,16 +46,6 @@ This project implements an end-to-end data engineering pipeline that:
 | `journal_articles`  | Published journal articles |
 | `conference_papers` | Conference papers and presentations |
 
----
-
-## Data Statistics
-
-Total Faculty Records: 109 faculty members
-
-Data Sources: 1 CSV file.
-
-Data Extraction Method:
-Faculty data was extracted from institutional web pages using Python’s BeautifulSoup library for HTML parsing, along with the requests library for HTTP communication.
 
 ### JSON Format (`data/raw_data.json`)
 
@@ -113,12 +103,10 @@ BDE/
 ├── requirements.txt           # Python dependencies
 ├── README.md                  # Readme file
 ├── .gitignore                 # Git ignore rules
-├── faculty.db                 # Database
 │
 ├── scripts/
 │   ├── Scraper.py            # Web scraping module
 │   └── Transformation.ipynb   # Data transformation notebook
-│   └── db_setup.ipynb       # Load the data into Database
 │
 ├── data/
 │   ├── raw_data.csv          # CSV format data
@@ -127,6 +115,7 @@ BDE/
 ├── logs/
 │   └── llm_usage.md          # LLM usage tracking
 │
+└── storage.ipynb             # Data storage and analysis notebook
 ```
 
 ---
@@ -143,10 +132,10 @@ BDE/
 - Cleans text fields (removes special characters, standardizes formatting)
 - Parses lists and arrays
 - Handles missing values
+
+### 3. Data Storage (`storage.ipynb`)
+- Saves data to CSV format (`data/raw_data.csv`)
 - Saves data to JSON format (`data/raw_data.json`)
-
-
-### 3. Data Storage (`db_setup.ipynb`)
 - Creates SQLite database schema
 - Inserts data into normalized database tables
 
@@ -156,6 +145,58 @@ BDE/
 - JSON responses for easy integration
 
 ---
+
+## Installation
+
+Follow these steps to set up the project locally:
+
+- Create and activate a Python virtual environment (recommended):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1  # PowerShell
+```
+
+- Install dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+- To run the API locally:
+
+```powershell
+uvicorn main:app --reload --port 8000
+```
+
+## Data Statistics (quick summary)
+
+The project includes a snapshot of the scraped faculty dataset at `data/raw_data.csv`. Basic statistics (computed from the CSV) are:
+
+- **Total records**: 111
+
+- **Null / missing values by column**:
+
+| Column | Null Count | Null % |
+|--------:|-----------:|-------:|
+| name | 0 | 0.0 |
+| profile | 0 | 0.0 |
+| education | 2 | 1.8 |
+| phone | 34 | 30.63 |
+| address | 35 | 31.53 |
+| email | 1 | 0.9 |
+| specialization | 4 | 3.6 |
+| personal_links | 65 | 58.56 |
+| bio | 43 | 38.74 |
+| teaching | 0 | 0.0 |
+| research_areas | 92 | 82.88 |
+| journal_articles | 94 | 84.68 |
+| conference_papers | 93 | 83.78 |
+
+If you need a deeper breakdown or aggregated reports (e.g., top specializations,
+email domain distribution), run the `data_pipeline/eda.ipynb` notebook which
+computes nulls, unique counts and shows sample rows.
+
 
 ## Logging
 

@@ -2,14 +2,13 @@ import sqlite3
 import json
 
 DB_PATH = "./faculty.db"
-JSON_PATH = "./data/raw_data.json"
+JSON_PATH = "./data/clean_faculty_data.json"
 
 
 def create_table():
-    """Create the `faculty` table in the SQLite database if missing.
-
-    The schema mirrors the pipeline's JSON fields and stores list-like
-    columns as strings to keep the DB simple and portable.
+    """
+    Create the `faculty` table with the updated schema.
+    List-like fields are stored as JSON-encoded TEXT.
     """
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -28,21 +27,20 @@ def create_table():
         bio TEXT,
         teaching TEXT,
         research_areas TEXT,
-        journal_articles TEXT,
-        conference_papers TEXT
+        publications TEXT,
+        embedding_text TEXT
     )
     """)
 
     conn.commit()
     conn.close()
-    print("Faculty table ready")
+    print("✅ Faculty table ready (updated schema)")
 
 
 def load_json_to_db():
-    """Load cleaned JSON records from `JSON_PATH` into SQLite.
-
-    Each record is inserted as a single row; list-like fields are
-    converted to strings to preserve content while storing in SQLite.
+    """
+    Load cleaned JSON records into SQLite.
+    All list/dict fields are serialized using json.dumps().
     """
     with open(JSON_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -55,7 +53,7 @@ def load_json_to_db():
         INSERT INTO faculty (
             name, profile, education, phone, address, email,
             specialization, personal_links, bio, teaching,
-            research_areas, journal_articles, conference_papers
+            research_areas, publications, embedding_text
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
@@ -65,22 +63,25 @@ def load_json_to_db():
             row.get("phone"),
             row.get("address"),
             row.get("email"),
-            str(row.get("specialization")),
-            row.get("personal_links"),
+
+            # ✅ Serialize list-like fields
+            json.dumps(row.get("specialization", [])),
+            json.dumps(row.get("personal_links", [])),
             row.get("bio"),
-            str(row.get("teaching")),
-            row.get("research_areas"),
-            str(row.get("journal_articles")),
-            str(row.get("conference_papers"))
+            json.dumps(row.get("teaching", [])),
+            json.dumps(row.get("research_areas", [])),
+            json.dumps(row.get("publications", [])),
+
+            row.get("embedding_text")
         ))
 
     conn.commit()
     conn.close()
-    print("JSON data inserted into SQLite")
+    print("✅ JSON data inserted into SQLite")
 
 
 def verify_count():
-    """Print a simple row-count verification for the `faculty` table."""
+    """Verify total rows in the faculty table."""
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -88,11 +89,11 @@ def verify_count():
     count = cursor.fetchone()[0]
 
     conn.close()
-    print(f"Total rows in faculty table: {count}")
+    print(f"📊 Total rows in faculty table: {count}")
 
 
 def run_db_pipeline():
-    """Run the full DB preparation pipeline: create table, load JSON, verify."""
+    """Run full DB pipeline."""
     create_table()
     load_json_to_db()
     verify_count()

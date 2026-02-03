@@ -1,36 +1,38 @@
-"""FastAPI service exposing DA-IICT faculty records from SQLite.
+"""
+FastAPI service for DA-IICT Faculty Finder.
 
-Provides endpoints to list all faculty and to search by `id` or `name`.
+Features:
+1. Keyword-based faculty access using SQLite
+2. Semantic faculty search using MPNet embeddings + FAISS
 """
 
 from fastapi import FastAPI, Query
 import sqlite3
 from typing import Optional
+from vector_search.search import search_faculty as semantic_search
 
-app = FastAPI()
+# -------------------- APP SETUP --------------------
+
+app = FastAPI(
+    title="Faculty Finder",
+    description="Keyword + Semantic faculty discovery system",
+    version="1.0"
+)
+
+# -------------------- DATABASE UTILS --------------------
 
 def get_db():
-    """Open and return a SQLite connection to the `faculty.db` file.
-
-    The returned connection uses `sqlite3.Row` as the row factory so
-    rows can be converted directly into dict-like objects.
-
-    Returns:
-        sqlite3.Connection: an open SQLite connection.
-    """
+    """Open and return a SQLite connection to faculty.db"""
     conn = sqlite3.connect("faculty.db")
     conn.row_factory = sqlite3.Row
     return conn
 
+# -------------------- KEYWORD SEARCH (SQLITE) --------------------
+
 @app.get("/faculty")
 def get_all_faculty():
-    """Return all rows from the `faculty` table as a list of dicts.
-
-    Connects to the local SQLite database, queries the `faculty`
-    table and returns the results in a JSON-serializable format.
-
-    Returns:
-        list[dict]: all faculty records.
+    """
+    Return all faculty records (keyword-based).
     """
     conn = get_db()
     cursor = conn.cursor()
@@ -43,22 +45,12 @@ def get_all_faculty():
 
 
 @app.get("/faculty/search")
-def search_faculty(
+def search_faculty_sql(
     id: Optional[int] = Query(None, description="Faculty ID"),
-    name: Optional[str] = Query(None, description="Faculty name")
+    name: Optional[str] = Query(None, description="Faculty name (partial match)")
 ):
-    """Search the `faculty` table by `id` and/or partial `name`.
-
-    Both parameters are optional; when provided they are combined with
-    an AND in the WHERE clause. The `name` parameter performs a
-    case-insensitive LIKE match for convenience.
-
-    Args:
-        id (int | None): faculty `id` to match exactly.
-        name (str | None): substring to match against `name`.
-
-    Returns:
-        list[dict]: matching faculty records.
+    """
+    Keyword-based search on faculty table using SQLite.
     """
     conn = get_db()
     cursor = conn.cursor()
@@ -79,3 +71,22 @@ def search_faculty(
 
     conn.close()
     return [dict(row) for row in rows]
+
+# -------------------- SEMANTIC SEARCH (FAISS + MPNet) --------------------
+
+@app.get("/search")
+def semantic_search_api(
+    query: str = Query(..., description="Natural language query"),
+    top_k: int = Query(5, description="Number of results")
+):
+    """
+    Semantic faculty search using transformer embeddings + FAISS.
+    """
+    results = semantic_search(query, top_k)
+    return results.to_dict(orient="records")
+
+# -------------------- HEALTH CHECK --------------------
+
+@app.get("/")
+def health():
+    return {"status": "Faculty Finder is running"}

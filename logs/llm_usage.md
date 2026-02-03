@@ -31,6 +31,7 @@ Prompt:
 I am building a FastAPI service that exposes cleaned faculty data stored in SQLite.
 The API should allow a Data Scientist to fetch all faculty records as JSON so they can generate embeddings and perform semantic search.
 Explain how to structure the FastAPI application with clear separation between database logic and API routes, and how to handle cases where the database or website data is unavailable.
+
 Solution:
 Designed a FastAPI structure separating DB logic from API routes.
 Implemented endpoints to return faculty data as JSON.
@@ -38,4 +39,14 @@ Used SQLite for persistent storage.
 Issues Faced & Resolution:
 API failed when database was unavailable - added try-except blocks and proper error responses.
 Initial response size was large - optimized queries to return only required fields.
+
+Prompt 4 — Help
+Prompt:
+I am building a data pipeline with multiple stages (scraping, transformation, database loading).
+I want to control which stages run using command-line arguments from a single Python entry point.
+Explain how to design a CLI using argparse that supports running individual steps, the full pipeline, and displays a clear custom help message.
+Response:
+Implemented a CLI-based pipeline controller using Python argparse.
+Added flags for each pipeline stage and an --all option to run the full workflow.
+Created a custom help menu with usage examples and validated invalid or conflicting arguments.
 

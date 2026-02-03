@@ -1,8 +1,11 @@
-"""Web scraper utilities for the DA-IICT faculty pages.
+"""
+Web scraper utilities for DA-IICT faculty pages.
 
-This module contains small helper functions to fetch HTML pages,
-parse faculty cards and profile pages, and save the aggregated
-results to `data/raw_data.csv` by default.
+- Scrapes all faculty categories
+- Extracts profile-level details
+- Handles multiple publication layouts
+- Stores ALL publications in a single `publications` column
+- Safe for missing / inconsistent HTML
 """
 
 import requests
@@ -10,6 +13,10 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 
+
+# -------------------------------------------------------------------
+# CONFIG
+# -------------------------------------------------------------------
 
 URLS = [
     "https://www.daiict.ac.in/faculty",
@@ -24,51 +31,105 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9"
 }
 
+REQUEST_DELAY = 0.7
+
+
+# -------------------------------------------------------------------
+# HELPERS
+# -------------------------------------------------------------------
 
 def fetch(url):
-    """Fetch the HTML content for a URL.
-
-    Returns the response text on success or `None` on failure.
-    """
+    """Fetch HTML content safely."""
     try:
-        r = requests.get(url, headers=HEADERS, timeout=10)
+        r = requests.get(url, headers=HEADERS, timeout=15)
         r.raise_for_status()
         return r.text
     except Exception as e:
-        print("Fetch error:", e)
+        print(f"[FETCH ERROR] {url} -> {e}")
         return None
 
 
+def clean_text(tag):
+    """Extract clean visible text from a BS tag."""
+    return tag.get_text(" ", strip=True).replace("\xa0", " ") if tag else None
+
+
+# -------------------------------------------------------------------
+# SECTION EXTRACTORS
+# -------------------------------------------------------------------
+
 def extract_teaching(soup):
-    """Extract a list of teaching/course strings from a profile soup.
-
-    If no teaching entries are found the function returns the string
-    "Not Provided" to match the rest of the pipeline's expectations.
-    """
+    """Extract teaching / courses."""
     teaching = []
-    li_tags = soup.select("div.work-exp ul li")
 
-    if li_tags:
-        for li in li_tags:
-            text = li.get_text(" ", strip=True).replace("\xa0", " ")
-            if text:
-                teaching.append(text)
-    else:
+    for li in soup.select("div.work-exp ul li"):
+        txt = clean_text(li)
+        if txt:
+            teaching.append(txt)
+
+    if not teaching:
         for p in soup.select("div.work-exp p"):
-            if p.find("a"):
-                continue
-            text = p.get_text(" ", strip=True).replace("\xa0", " ")
-            if text:
-                teaching.append(text)
+            if not p.find("a"):
+                txt = clean_text(p)
+                if txt:
+                    teaching.append(txt)
 
-    return teaching if teaching else "Not Provided"
+    return teaching or None
+
+
+def extract_research_areas(soup):
+    """Extract research areas."""
+    areas = []
+
+    for li in soup.select("div.work-exp1 li"):
+        txt = clean_text(li)
+        if txt:
+            areas.append(txt)
+
+    if not areas:
+        for p in soup.select("div.work-exp1 p"):
+            txt = clean_text(p)
+            if txt:
+                areas.append(txt)
+
+    return areas or None
+
+
+def extract_publications(soup):
+    """
+    Extract ALL publications (journals + conferences + books).
+
+    Handles:
+    - Old pages (with h4 + ul)
+    - New pages (multiple div.education blocks)
+    """
+
+    publications = set()
+
+    # NEW / MOST COMMON LAYOUT
+    for block in soup.select("div.education.overflowContent"):
+        for li in block.select("ul li"):
+            txt = clean_text(li)
+            if txt:
+                publications.add(txt)
+
+    # OLD LAYOUT (fallback)
+    if not publications:
+        for ul in soup.select("div.education ul"):
+            for li in ul.select("li"):
+                txt = clean_text(li)
+                if txt:
+                    publications.add(txt)
+
+    return list(publications) or None
+
+
+# -------------------------------------------------------------------
+# PROFILE SCRAPER
+# -------------------------------------------------------------------
 
 def extract_profile(profile_url):
-    """Given a profile URL, fetch and extract profile fields.
-
-    Returns a tuple: (bio, teaching, research_areas, personal_links, pubs_dict)
-    where `pubs_dict` contains keys `journals` and `conferences` or `None`.
-    """
+    """Extract data from an individual faculty profile page."""
 
     html = fetch(profile_url)
     if not html:
@@ -76,57 +137,24 @@ def extract_profile(profile_url):
 
     soup = BeautifulSoup(html, "html.parser")
 
-    bio_tag = soup.select_one("div.about p")
-    bio = bio_tag.get_text(strip=True) if bio_tag else None
-
+    bio = clean_text(soup.select_one("div.about p"))
     teaching = extract_teaching(soup)
-
-    research_areas = None
-    li_tags = soup.select("div.work-exp1 li")
-    p_tags = soup.select("div.work-exp1 p")
-
-    if li_tags:
-        research_areas = [li.get_text(strip=True) for li in li_tags]
-    elif p_tags:
-        research_areas = [p.get_text(strip=True) for p in p_tags]
+    research_areas = extract_research_areas(soup)
 
     link_tag = soup.select_one("div.field--name-field-sites a")
     personal_links = link_tag["href"] if link_tag else None
 
-    journals, conferences = [], []
-    pub_block = soup.select_one("div.education.overflowContent")
+    publications = extract_publications(soup)
 
-    if pub_block:
-        for h in pub_block.find_all("h4"):
-            title = h.get_text(strip=True).lower()
-            ul = h.find_next_sibling("ul")
+    return bio, teaching, research_areas, personal_links, publications
 
-            if not ul:
-                continue
 
-            papers = [
-                li.get_text(" ", strip=True).replace("\xa0", " ")
-                for li in ul.find_all("li")
-            ]
-
-            if "journal" in title:
-                journals = papers
-            elif "conference" in title:
-                conferences = papers
-
-    return bio, teaching, research_areas, personal_links, {
-        "journals": journals or None,
-        "conferences": conferences or None
-    }
-
+# -------------------------------------------------------------------
+# FACULTY LISTING SCRAPER
+# -------------------------------------------------------------------
 
 def scrape(url):
-    """Scrape a faculty listing page and return a list of records.
-
-    Each record is a dict matching the pipeline schema. If the page
-    cannot be fetched an empty list is returned.
-    """
-
+    """Scrape one faculty listing page."""
     html = fetch(url)
     if not html:
         return []
@@ -134,33 +162,27 @@ def scrape(url):
     soup = BeautifulSoup(html, "html.parser")
     cards = soup.find_all("div", class_="facultyDetails")
 
-    print("Scraping page | Faculty count:", len(cards))
-    data = []
+    print(f"Scraping {url} | Faculty found: {len(cards)}")
+
+    rows = []
 
     for card in cards:
         try:
             name_tag = card.select_one("h3 a")
-            name = name_tag.get_text(strip=True)
-            profile = name_tag["href"]
+            name = clean_text(name_tag)
+            profile = name_tag["href"] if name_tag else None
 
-            education = card.select_one(".facultyEducation")
-            education = education.get_text(strip=True) if education else None
+            education = clean_text(card.select_one(".facultyEducation"))
+            phone = clean_text(card.select_one(".facultyNumber"))
+            address = clean_text(card.select_one(".facultyAddress"))
+            email = clean_text(card.select_one(".facultyemail"))
+            specialization = clean_text(card.select_one(".areaSpecialization p"))
 
-            phone = card.select_one(".facultyNumber")
-            phone = phone.get_text(strip=True) if phone else None
+            bio, teaching, research_areas, personal_links, publications = (
+                extract_profile(profile) if profile else (None, None, None, None, None)
+            )
 
-            address = card.select_one(".facultyAddress")
-            address = address.get_text(strip=True) if address else None
-
-            email = card.select_one(".facultyemail")
-            email = email.get_text(strip=True) if email else None
-
-            specialization = card.select_one(".areaSpecialization p")
-            specialization = specialization.get_text(strip=True) if specialization else None
-
-            bio, teaching, research_areas, personal_links, publications = extract_profile(profile)
-
-            data.append({
+            rows.append({
                 "name": name,
                 "profile": profile,
                 "education": education,
@@ -172,32 +194,30 @@ def scrape(url):
                 "bio": bio,
                 "teaching": teaching,
                 "research_areas": research_areas,
-                "journal_articles": publications["journals"] if publications else None,
-                "conference_papers": publications["conferences"] if publications else None,
+                "publications": publications
             })
 
-            time.sleep(0.7)
+            time.sleep(REQUEST_DELAY)
 
         except Exception as e:
-            print("Error parsing card:", e)
+            print(f"[PARSE ERROR] {name if name else 'Unknown'} -> {e}")
 
-    return data
+    return rows
+
 
 def run_scraper(output_path="data/raw_data.csv"):
-    """Run the scraper over configured `URLS` and save results.
-
-    Args:
-        output_path (str): path to write the CSV file (default: `data/raw_data.csv`).
-    """
+    """Run scraper for all configured URLs."""
     all_data = []
 
     for url in URLS:
-        print(f"\nScraping URL: {url}")
+        print(f"\n▶ Scraping URL: {url}")
         all_data.extend(scrape(url))
 
     df = pd.DataFrame(all_data)
     df.to_csv(output_path, index=False)
-    print(f"\nAll faculty data saved to {output_path}")
+
+    print(f"\n Scraping complete. Data saved to: {output_path}")
+    print(f"Total faculty records: {len(df)}")
 
 
 if __name__ == "__main__":
