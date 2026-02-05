@@ -7,9 +7,11 @@ Features:
 """
 
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 from typing import Optional
-from vector_search.search import search_faculty as semantic_search
+from pathlib import Path
+import logging
 
 # -------------------- APP SETUP --------------------
 
@@ -19,27 +21,48 @@ app = FastAPI(
     version="1.0"
 )
 
+# -------------------- LOGGING --------------------
+
+logging.basicConfig(level=logging.INFO)
+
+# -------------------- CORS MIDDLEWARE --------------------
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # Restrict later if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# -------------------- PATHS --------------------
+
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "faculty.db"
+
 # -------------------- DATABASE UTILS --------------------
 
 def get_db():
     """Open and return a SQLite connection to faculty.db"""
-    conn = sqlite3.connect("faculty.db")
+    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
+
+# -------------------- HEALTH CHECK --------------------
+
+@app.get("/")
+def health_check():
+    return {"status": "Faculty Finder API is live"}
 
 # -------------------- KEYWORD SEARCH (SQLITE) --------------------
 
 @app.get("/faculty")
 def get_all_faculty():
-    """
-    Return all faculty records (keyword-based).
-    """
+    """Return all faculty records."""
     conn = get_db()
     cursor = conn.cursor()
-
     cursor.execute("SELECT * FROM faculty")
     rows = cursor.fetchall()
-
     conn.close()
     return [dict(row) for row in rows]
 
@@ -47,11 +70,10 @@ def get_all_faculty():
 @app.get("/faculty/search")
 def search_faculty_sql(
     id: Optional[int] = Query(None, description="Faculty ID"),
-    name: Optional[str] = Query(None, description="Faculty name (partial match)")
+    name: Optional[str] = Query(None, description="Faculty name (partial match)"),
+    query_str: Optional[str] = Query(None, description="Keyword search")
 ):
-    """
-    Keyword-based search on faculty table using SQLite.
-    """
+    """Keyword-based search using SQLite."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -66,27 +88,59 @@ def search_faculty_sql(
         query += " AND name LIKE ?"
         params.append(f"%{name}%")
 
+    if query_str is not None:
+        search_term = f"%{query_str}%"
+        query += """
+            AND (
+                name LIKE ? OR
+                specialization LIKE ? OR
+                research_areas LIKE ? OR
+                teaching LIKE ? OR
+                bio LIKE ? OR
+                profile LIKE ?
+            )
+        """
+        params.extend([search_term] * 6)
+
     cursor.execute(query, params)
     rows = cursor.fetchall()
-
     conn.close()
     return [dict(row) for row in rows]
 
-# -------------------- SEMANTIC SEARCH (FAISS + MPNet) --------------------
+# -------------------- SEMANTIC SEARCH --------------------
 
-@app.get("/search")
-def semantic_search_api(
-    query: str = Query(..., description="Natural language query"),
-    top_k: int = Query(5, description="Number of results")
+@app.get("/faculty/semantic-search")
+def search_faculty_semantic(
+    query_str: str = Query(..., description="Semantic search query")
 ):
     """
-    Semantic faculty search using transformer embeddings + FAISS.
+    Semantic faculty search using MPNet embeddings + FAISS.
+    Falls back to keyword search if model fails.
     """
-    results = semantic_search(query, top_k)
-    return results.to_dict(orient="records")
+    try:
+        from model.recommender import search_faculty
+        return search_faculty(query_str, top_k=8)
 
-# -------------------- HEALTH CHECK --------------------
+    except Exception as e:
+        logging.error(f"Semantic search failed: {e}")
 
-@app.get("/")
-def health():
-    return {"status": "Faculty Finder is running"}
+        # Fallback to keyword search
+        conn = get_db()
+        cursor = conn.cursor()
+        search_term = f"%{query_str}%"
+        cursor.execute(
+            """
+            SELECT * FROM faculty WHERE (
+                name LIKE ? OR
+                specialization LIKE ? OR
+                research_areas LIKE ? OR
+                teaching LIKE ? OR
+                bio LIKE ? OR
+                profile LIKE ?
+            )
+            """,
+            [search_term] * 6
+        )
+        rows = cursor.fetchall()
+        conn.close()
+        return [dict(row) for row in rows]

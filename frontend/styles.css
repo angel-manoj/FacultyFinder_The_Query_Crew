@@ -1,0 +1,146 @@
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+}
+
+/* Light */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Dark */
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Navbar */
+.nav-backdrop {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+body.dark .nav-backdrop {
+  background: rgba(15,23,42,0.9);
+}
+
+/* Input */
+.search-glass {
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+body.dark .search-glass {
+  background: #020617;
+  color: #e5e7eb;
+  border-color: #334155;
+}
+
+/* Button */
+.btn-gradient {
+  background: linear-gradient(90deg, #4338ca, #0f766e);
+  color: white;
+  font-weight: 600;
+}
+
+/* Card */
+.card-hover {
+  background: var(--surface);
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  min-height: 260px;
+}
+
+body.dark .card-hover {
+  background: #020617;
+  border-color: #334155;
+}
+
+/* Badge – FIX full width issue */
+.badge {
+  display: inline-flex;        /* 🔑 NOT block */
+  align-items: center;
+  gap: 4px;
+
+  background: rgba(79,70,229,0.12);
+  color: var(--primary);
+
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+
+  width: fit-content;          /* 🔑 prevents full width */
+  max-width: max-content;     /* 🔑 prevents stretching */
+  white-space: nowrap;        /* 🔑 single line */
+}
+
+
+/* Tooltip */
+.tooltip:hover::after {
+  content: "High semantic relevance using cross-encoder re-ranking";
+  position: absolute;
+  background: #111;
+  color: #fff;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+/* Visit button */
+.visit-btn {
+  background: linear-gradient(90deg, #4f46e5, #14b8a6);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* HERO TRANSITION */
+.hero {
+  transition: all 0.7s ease;
+}
+
+.hero-center {
+  min-height: calc(100vh - 4rem); /* full viewport minus navbar */
+}
+
+.hero-compact {
+  min-height: auto;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.hero-compact #heroTitle {
+  font-size: 2rem;
+}
+
+.hero-compact #heroSubtitle {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* (ALL YOUR EXISTING STYLES REMAIN UNCHANGED BELOW) */

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Faculty Finder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="antialiased">
+
+<!-- Navbar -->
+<nav class="fixed top-0 w-full nav-backdrop z-50">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <div id="navBrand" class="flex items-center gap-2 cursor-pointer">
+      <div class="bg-indigo-100 p-2 rounded-lg">⚡</div>
+      <span class="font-bold text-xl">
+        Faculty<span class="text-indigo-600">Finder</span>
+      </span>
+    </div>
+    <button id="themeToggle" class="px-3 py-1 rounded-lg border text-sm">🌙</button>
+  </div>
+</nav>
+
+<main class="pt-16 max-w-7xl mx-auto px-4 min-h-screen flex flex-col">
+
+  <!-- HERO (FIXED CENTERING) -->
+  <section
+    id="heroSection"
+    class="hero hero-center flex flex-col justify-center items-center text-center max-w-2xl mx-auto flex-1"
+  >
+    <h1 id="heroTitle" class="text-5xl font-bold mb-4">
+      Discover <span class="text-indigo-600">Academic Talent</span>
+    </h1>
+
+    <p id="heroSubtitle" class="text-gray-500 mb-10">
+      Semantic search to find faculty aligned with your research interests
+    </p>
+
+    <!-- Search -->
+    <form id="searchForm" class="w-full max-w-xl">
+      <div class="relative">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search faculty by expertise, research interest..."
+          class="search-glass w-full py-4 pl-4 pr-36 rounded-xl text-lg"
+        />
+        <button
+          id="searchBtn"
+          type="submit"
+          class="absolute inset-y-2 right-2 btn-gradient px-4 rounded-lg flex items-center gap-2"
+        >
+          <span id="searchBtnText">Search</span>
+          <span id="searchSpinner" class="hidden spinner"></span>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Error -->
+  <div id="errorContainer" class="hidden mt-6 p-4 rounded-xl">
+    <p id="errorMessage"></p>
+  </div>
+
+  <!-- No Results -->
+  <div id="noResults" class="hidden text-center py-12">
+    <p class="text-gray-500">No relevant faculty found.</p>
+  </div>
+
+  <!-- Results -->
+  <div
+    id="resultsGrid"
+    class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
+  ></div>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-slate-900 border-t">
+  <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
+    <p class="text-white font-bold">
+      © 2026 Faculty Finder - The Query Crew
+    </p>
+    <p class="text-white font-bold-300 text-sm">
+      Built by <strong>Angel Manoj</strong> & <strong>Deep Patel</strong>
+    </p>
+    <a
+      href="https://github.com/angel-manoj/FacultyFinder_The_Query_Crew.git"
+      target="_blank"
+      class="text-gray-300 hover:text-white flex items-center gap-1"
+    >
+      🐙 GitHub
+    </a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
