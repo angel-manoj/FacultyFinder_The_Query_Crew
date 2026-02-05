@@ -5,21 +5,23 @@ Features:
 1. Keyword-based faculty access using SQLite
 2. Semantic faculty search using MPNet embeddings + FAISS
 """
-
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import sqlite3
 from typing import Optional
 from pathlib import Path
 import logging
-
-# -------------------- APP SETUP --------------------
 
 app = FastAPI(
     title="Faculty Finder",
     description="Keyword + Semantic faculty discovery system",
     version="1.0"
 )
+
+# Serve frontend UI
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+
 
 # -------------------- LOGGING --------------------
 
