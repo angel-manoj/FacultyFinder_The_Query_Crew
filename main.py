@@ -4,7 +4,9 @@ FastAPI service for DA-IICT Faculty Finder.
 Features:
 1. Keyword-based faculty access using SQLite
 2. Semantic faculty search using MPNet embeddings + FAISS
+3. Serves frontend UI
 """
+
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -13,25 +15,23 @@ from typing import Optional
 from pathlib import Path
 import logging
 
+# -------------------- APP SETUP --------------------
+
 app = FastAPI(
     title="Faculty Finder",
     description="Keyword + Semantic faculty discovery system",
     version="1.0"
 )
 
-# Serve frontend UI
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
-
-
 # -------------------- LOGGING --------------------
 
 logging.basicConfig(level=logging.INFO)
 
-# -------------------- CORS MIDDLEWARE --------------------
+# -------------------- CORS --------------------
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],      # Restrict later if needed
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,19 +42,23 @@ app.add_middleware(
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "faculty.db"
 
-# -------------------- DATABASE UTILS --------------------
+# -------------------- DATABASE --------------------
 
 def get_db():
-    """Open and return a SQLite connection to faculty.db"""
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
-# -------------------- KEYWORD SEARCH (SQLITE) --------------------
+# -------------------- HEALTH CHECK --------------------
+
+@app.get("/api")
+def health_check():
+    return {"status": "Faculty Finder API is live"}
+
+# -------------------- GET ALL FACULTY --------------------
 
 @app.get("/faculty")
 def get_all_faculty():
-    """Return all faculty records."""
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM faculty")
@@ -62,14 +66,14 @@ def get_all_faculty():
     conn.close()
     return [dict(row) for row in rows]
 
+# -------------------- KEYWORD SEARCH --------------------
 
 @app.get("/faculty/search")
 def search_faculty_sql(
-    id: Optional[int] = Query(None, description="Faculty ID"),
-    name: Optional[str] = Query(None, description="Faculty name (partial match)"),
-    query_str: Optional[str] = Query(None, description="Keyword search")
+    id: Optional[int] = Query(None),
+    name: Optional[str] = Query(None),
+    query_str: Optional[str] = Query(None)
 ):
-    """Keyword-based search using SQLite."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -106,13 +110,7 @@ def search_faculty_sql(
 # -------------------- SEMANTIC SEARCH --------------------
 
 @app.get("/faculty/semantic-search")
-def search_faculty_semantic(
-    query_str: str = Query(..., description="Semantic search query")
-):
-    """
-    Semantic faculty search using MPNet embeddings + FAISS.
-    Falls back to keyword search if model fails.
-    """
+def search_faculty_semantic(query_str: str):
     try:
         from model.recommender import search_faculty
         return search_faculty(query_str, top_k=8)
@@ -120,10 +118,10 @@ def search_faculty_semantic(
     except Exception as e:
         logging.error(f"Semantic search failed: {e}")
 
-        # Fallback to keyword search
         conn = get_db()
         cursor = conn.cursor()
         search_term = f"%{query_str}%"
+
         cursor.execute(
             """
             SELECT * FROM faculty WHERE (
@@ -137,6 +135,11 @@ def search_faculty_semantic(
             """,
             [search_term] * 6
         )
+
         rows = cursor.fetchall()
         conn.close()
         return [dict(row) for row in rows]
+
+# -------------------- SERVE FRONTEND (IMPORTANT: LAST) --------------------
+
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
