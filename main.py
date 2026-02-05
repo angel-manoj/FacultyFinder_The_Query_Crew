@@ -50,12 +50,6 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-# -------------------- HEALTH CHECK --------------------
-
-@app.get("/")
-def health_check():
-    return {"status": "Faculty Finder API is live"}
-
 # -------------------- KEYWORD SEARCH (SQLITE) --------------------
 
 @app.get("/faculty")
