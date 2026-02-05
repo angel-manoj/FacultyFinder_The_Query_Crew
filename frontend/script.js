@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000';
+// No hardcoded localhost — use same domain as frontend
 const RELEVANCE_THRESHOLD = 0.5;
 
 let searchBtnText, searchSpinner;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function handleSearch(e) {
-  e.preventDefault(); // ✅ always first
+  e.preventDefault();
 
   const hero = document.getElementById('heroSection');
   hero.classList.add('hero-compact');
@@ -45,8 +45,9 @@ async function handleSearch(e) {
     searchBtnText.textContent = 'Searching...';
     searchSpinner.classList.remove('hidden');
 
+    // ✅ Relative API call (works on Render + local)
     const res = await fetch(
-      `${API_URL}/faculty/semantic-search?query_str=${encodeURIComponent(query)}`
+      `/faculty/semantic-search?query_str=${encodeURIComponent(query)}`
     );
 
     if (!res.ok) throw new Error(`API Error: ${res.status}`);
@@ -70,7 +71,6 @@ async function handleSearch(e) {
   }
 }
 
-
 function showSkeletons() {
   resultsGrid.innerHTML = Array(3).fill(0).map(() => `
     <div class="card-hover animate-pulse">
@@ -79,6 +79,7 @@ function showSkeletons() {
       <div class="h-3 bg-slate-200 rounded w-full"></div>
     </div>
   `).join('');
+
   resultsGrid.classList.remove('hidden');
 }
 
@@ -109,10 +110,12 @@ function createFacultyCard(faculty) {
     ` : ''}
 
     <h3 class="text-lg font-bold mb-1">${faculty.name}</h3>
-    <p class="text-sm text-gray-600 mb-2">${faculty.education}</p>
+    <p class="text-sm text-gray-600 mb-2">${faculty.education || ''}</p>
 
     <p class="text-sm text-gray-500 break-all">
-      📧 <a href="mailto:${faculty.email}" class="hover:text-indigo-600">${faculty.email}</a>
+      📧 <a href="mailto:${faculty.email}" class="hover:text-indigo-600">
+        ${faculty.email}
+      </a>
     </p>
 
     <p class="text-sm text-gray-500 mt-1">
