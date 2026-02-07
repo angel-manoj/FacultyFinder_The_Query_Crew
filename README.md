@@ -1,96 +1,133 @@
-# Big Data Engineering (BDE) - Faculty Finder Pipeline
+# Faculty Finder – End‑to‑End Semantic Search System
 
-A comprehensive data processing pipeline for faculty information extraction, transformation, and storage. This project processes faculty data from web sources and prepares it for NLP analysis.
+A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, stores, and semantically searches university faculty data. The system combines a robust **data pipeline**, **SQLite-backed APIs**, **embedding-based semantic search**, and a **zero-build frontend UI**.
+
+---
 
 ## Table of Contents
-- [Overview](#overview)
-- [Data Schema](#data-schema)
-- [Project Structure](#project-structure)
-- [Pipeline Workflow](#pipeline-workflow)
+
+* [Overview](#overview)
+* [System Architecture](#system-architecture)
+* [Tech Stack](#tech-stack)
+* [Data Schema](#data-schema)
+* [Project Structure](#project-structure)
+* [Pipeline Workflow](#pipeline-workflow)
+* [Semantic Search & Recommender](#semantic-search--recommender)
+* [API Usage](#api-usage)
+* [Frontend](#frontend)
+* [Installation & Setup](#installation--setup)
+* [Data Statistics](#data-statistics)
+* [Help & Troubleshooting](#help--troubleshooting)
+* [Contributors](#contributors)
 
 ---
 
 ## Overview
 
-This project implements an end-to-end data engineering pipeline that:
-1. **Scrapes** faculty information from institutional websites
-2. **Transforms** raw data into structured formats (CSV, JSON)
-3. **Cleans** data for NLP tasks.
-4. **Stores** data in SQLite.
-5. **Provides** API endpoints to query faculty data
+**Faculty Finder** is an end-to-end faculty discovery platform designed to help users find academic experts using **semantic search** rather than keyword matching.
 
-### Technologies Used
-- Python 3.8+
-- FastAPI
-- SQLite
-- Pandas
-- Jupyter Notebooks
+🚀 **Live Demo (Hosted on Railway)**
+👉 [https://faculty-finder-production-507e.up.railway.app/](https://faculty-finder-production-507e.up.railway.app/)
+
+Basic Idea & Workflow
+At a high level, Faculty Finder follows a simple but powerful idea: ingest raw faculty data, enrich it using semantic embeddings, and make it easily searchable through APIs and a user-friendly interface.
+
+The project workflow is:
+
+* Recreate a reproducible Python environment
+* Scrape and ingest faculty profiles from institutional websites
+* Clean and transform raw HTML/JSON data into structured CSV and SQLite formats
+* Store structured faculty data in a SQLite database
+* Build vector embeddings for faculty profiles to enable semantic retrieval
+* Apply a recommender pipeline to rerank results based on semantic relevance
+* Expose faculty data and semantic search via FastAPI REST endpoints
+* Serve ranked results through a lightweight, publicly hosted frontend UI
+---
+
+## System Architecture
+
+```
+Web Sources
+     ↓
+Scraper (scraper.py)
+     ↓
+Transform & Clean (transform.py)
+     ↓
+SQLite Storage (db_setup.py)
+     ↓
+Embedding Builder (build_embeddings.py)
+     ↓
+Semantic Search + Reranking (recommender.py)
+     ↓
+FastAPI Backend (main.py / semantic_api.py)
+     ↓
+Frontend UI (HTML + CSS + JS)
+```
+
+---
+
+## Tech Stack
+
+### Backend & Data
+
+* Python 3.8+
+* FastAPI
+* SQLite
+* Pandas
+* Sentence Transformers (for embeddings)
+
+### Frontend
+
+* HTML5
+* TailwindCSS (CDN)
+* Vanilla JavaScript
+* Zero build / no bundler
+
+### Analysis
+
+* Jupyter Notebook (`eda.ipynb`)
 
 ---
 
 ## Data Schema
 
-| Column Name          | Description |
-|----------------------|-------------|
-| `name`              | Faculty member’s full name |
-| `profile`           | University profile link |
-| `education`         | Educational background and degrees |
-| `phone`             | Contact phone number |
-| `address`           | Office address |
-| `email`             | Email address |
-| `specialization`    | Research specializations |
-| `personal_links`    | Google Scholar, LinkedIn, or personal website links |
-| `bio`               | Professional biography and experience |
-| `teaching`          | Courses taught |
-| `research_areas`    | Research areas and focus |
-| `journal_articles`  | Published journal articles |
-| `conference_papers` | Conference papers and presentations |
+### Core Fields
 
+| Column            | Description              |
+| ----------------- | ------------------------ |
+| name              | Faculty full name        |
+| profile           | Profile URL              |
+| education         | Academic background      |
+| phone             | Contact number           |
+| address           | Office address           |
+| email             | Email ID                 |
+| specialization    | Areas of expertise       |
+| personal_links    | Scholar / personal links |
+| bio               | Professional biography   |
+| teaching          | Courses taught           |
+| research_areas    | Research interests       |
+| journal_articles  | Journal publications     |
+| conference_papers | Conference publications  |
 
-### JSON Format (`data/raw_data.json`)
-
-```json
-[
-  {
-    "name": "Faculty Name",
-    "profile": "https://...",
-    "education": "PhD in ...",
-    "phone": "XXX-XXXX",
-    "address": "...",
-    "email": "email@...",
-    "specialization": ["Area1", "Area2"],
-    "personal_links": "https://...",
-    "bio": "...",
-    "teaching": ["Course1", "Course2"],
-    "research_areas": ["Area1", "Area2"],
-    "journal_articles": ["Article1", "Article2"],
-    "conference_papers": ["Paper1", "Paper2"]
-  }
-]
-```
-
-### SQLite Database Schema
-
-The SQLite database (`faculty.db`) contains a normalized schema:
+### SQLite Table
 
 ```sql
 CREATE TABLE faculty (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    profile TEXT,
-    education TEXT,
-    phone TEXT,
-    address TEXT,
-    email TEXT,
-    specialization TEXT,
-    personal_links TEXT,
-    bio TEXT,
-    teaching TEXT,
-    research_areas TEXT,
-    journal_articles TEXT,
-    conference_papers TEXT
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  profile TEXT,
+  education TEXT,
+  phone TEXT,
+  address TEXT,
+  email TEXT,
+  specialization TEXT,
+  personal_links TEXT,
+  bio TEXT,
+  teaching TEXT,
+  research_areas TEXT,
+  journal_articles TEXT,
+  conference_papers TEXT
 );
-
 ```
 
 ---
@@ -98,109 +135,197 @@ CREATE TABLE faculty (
 ## Project Structure
 
 ```
-BDE/
-├── main.py                    # FastAPI server with endpoints
-├── requirements.txt           # Python dependencies
-├── README.md                  # Readme file
-├── .gitignore                 # Git ignore rules
+FacultyFinder/
+├── main.py                 # FastAPI entry point
+├── semantic_api.py         # Semantic search endpoints
+├── recommender.py          # Embedding similarity + reranking
+├── build_embeddings.py     # Vector embedding builder
+├── pipeline.py             # End-to-end pipeline runner
+├── fetch_data.py           # Data loading helpers
+├── scraper.py              # Web scraping logic
+├── transform.py            # Data cleaning & transformation
+├── db_setup.py             # SQLite schema & insertion
+├── eda.ipynb               # Data analysis notebook
 │
-├── scripts/
-│   ├── Scraper.py            # Web scraping module
-│   └── Transformation.ipynb   # Data transformation notebook
+├── index.html              # Frontend UI
+├── styles.css              # UI styles
+├── script.js               # UI logic
 │
 ├── data/
-│   ├── raw_data.csv          # CSV format data
-│   └── raw_data.json         # JSON format data
+│   ├── raw_data.json
+│   └── raw_data.csv
 │
-├── logs/
-│   └── llm_usage.md          # LLM usage tracking
+├── embeddings/
+│   └── faculty_embeddings.pkl
 │
-└── storage.ipynb             # Data storage and analysis notebook
+└── README.md
 ```
 
 ---
 
 ## Pipeline Workflow
 
-### 1. Data Scraping (`scripts/Scraper.py`)
-- Extracts faculty information from institutional websites
-- Handles HTML parsing and data extraction
-- Validates and cleans raw data
+### 1. Scraping
 
-### 2. Data Transformation (`scripts/Transformation.ipynb`)
-- Converts raw data into structured formats
-- Cleans text fields (removes special characters, standardizes formatting)
-- Parses lists and arrays
-- Handles missing values
+* Extracts faculty details from institutional web pages
+* Handles inconsistent HTML layouts
 
-### 3. Data Storage (`storage.ipynb`)
-- Saves data to CSV format (`data/raw_data.csv`)
-- Saves data to JSON format (`data/raw_data.json`)
-- Creates SQLite database schema
-- Inserts data into normalized database tables
+### 2. Transformation
 
-### 4. Data Serving (`main.py`)
-- FastAPI REST API for data access
-- Query endpoints for faculty information
-- JSON responses for easy integration
+* Cleans text fields
+* Normalizes lists and missing values
+* Outputs CSV and JSON
+
+### 3. Storage
+
+* Inserts cleaned data into SQLite
+* Enables fast structured querying
+
+### 4. Embedding Generation
+
+* Builds dense vector representations for faculty profiles
+* Stores embeddings for semantic similarity search
 
 ---
 
-## Installation
+## Semantic Search & Recommender
 
-Follow these steps to set up the project locally:
+* Uses **sentence-level embeddings** for semantic matching
+* Computes cosine similarity between query and faculty profiles
+* Applies reranking to surface the most relevant faculty
+* Returns ranked results with relevance scores
 
-- Create and activate a Python virtual environment (recommended):
+This allows users to search using **natural language queries** such as:
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1  # PowerShell
-```
+> "machine learning in healthcare"
 
-- Install dependencies:
+---
 
-```powershell
-pip install -r requirements.txt
-```
+## API Usage
 
-- To run the API locally:
+### Start Server
 
-```powershell
+```bash
 uvicorn main:app --reload --port 8000
 ```
 
-## Data Statistics (quick summary)
+### Example Endpoints
 
-The project includes a snapshot of the scraped faculty dataset at `data/raw_data.csv`. Basic statistics (computed from the CSV) are:
-
-- **Total records**: 111
-
-- **Null / missing values by column**:
-
-| Column | Null Count | Null % |
-|--------:|-----------:|-------:|
-| name | 0 | 0.0 |
-| profile | 0 | 0.0 |
-| education | 2 | 1.8 |
-| phone | 34 | 30.63 |
-| address | 35 | 31.53 |
-| email | 1 | 0.9 |
-| specialization | 4 | 3.6 |
-| personal_links | 65 | 58.56 |
-| bio | 43 | 38.74 |
-| teaching | 0 | 0.0 |
-| research_areas | 92 | 82.88 |
-| journal_articles | 94 | 84.68 |
-| conference_papers | 93 | 83.78 |
-
-If you need a deeper breakdown or aggregated reports (e.g., top specializations,
-email domain distribution), run the `data_pipeline/eda.ipynb` notebook which
-computes nulls, unique counts and shows sample rows.
-
-
-## Logging
-
-LLM usage and processing logs are stored in:
-- `logs/llm_usage.md` - Tracks LLM (Language Model) API usage
+| Method | Endpoint         | Description             |
+| ------ | ---------------- | ----------------------- |
+| GET    | /faculty         | List all faculty        |
+| GET    | /faculty/search  | Search by name or ID    |
+| POST   | /semantic-search | Semantic faculty search |
 
 ---
+
+## Frontend
+
+The frontend is a **zero-build UI**:
+
+* Open `index.html` directly in the browser
+* Connects to FastAPI backend
+* Supports:
+
+  * Semantic search
+  * Light / Dark mode
+  * Relevance badges
+  * Loading states
+  * Responsive layout
+
+---
+
+## Installation & Setup
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # or .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Run Full Pipeline (Recommended)
+
+```bash
+python pipeline.py --all
+```
+
+This command:
+
+* Scrapes / loads raw data
+* Cleans and transforms it
+* Loads it into SQLite
+* Builds embeddings for semantic search
+
+### Run Backend API
+
+```bash
+uvicorn main:app --reload --port 8000
+```
+
+---
+
+## Data Statistics
+
+Derived from `eda.ipynb`:
+
+* **Total faculty records**: 111
+* **Total attributes per faculty**: 15
+* **Unique specializations identified**: ~380+
+* **Dominant research areas**:
+
+  * Machine Learning
+  * Computer Vision
+  * Natural Language Processing
+  * Information Retrieval
+
+### Publication Insights
+
+* **Average publications per faculty**: ~3
+* **Publication range**: 0 to 60+
+
+### Data Quality Notes
+
+* Academic fields (name, teaching, specialization) are largely complete
+* Contact details (phone, address, personal links) show higher missing rates
+* Text-heavy fields show high variability, making them suitable for semantic embeddings
+
+---
+
+## Help & Troubleshooting
+
+**Port already in use**
+
+```bash
+lsof -i :8000
+kill -9 <PID>
+```
+
+**No semantic results returned**
+
+* Ensure embeddings are built using `python pipeline.py --all`
+* Check that embedding artifacts exist
+
+**Frontend not showing results**
+
+* Confirm backend is running
+* Verify API URL in `script.js`
+
+---
+
+## Future Improvements
+
+* Add Dockerfile and docker-compose for one-command deployment
+* Add unit tests for pipeline and recommender components
+* Expose OpenAPI / Swagger documentation for semantic endpoints
+* Support incremental embedding updates for new faculty data
+
+---
+
+## Contributors
+
+* **Deep Patel**
+* **Angel Manoj**
+
+---
+
+© 2026 – Faculty Finder | The Query Crew
