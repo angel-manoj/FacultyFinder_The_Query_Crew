@@ -4,113 +4,117 @@ A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, s
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 
 * [Overview](#overview)
+* [Why Semantic Search?](#why-semantic-search)
 * [System Architecture](#system-architecture)
 * [Tech Stack](#tech-stack)
+* [Skills Demonstrated](#skills-demonstrated)
 * [Data Schema](#data-schema)
 * [Project Structure](#project-structure)
 * [Pipeline Workflow](#pipeline-workflow)
 * [Semantic Search & Recommender](#semantic-search--recommender)
-* [API Usage](#api-usage)
-* [Frontend](#frontend)
-* [Installation & Setup](#installation--setup)
 * [Data Statistics](#data-statistics)
+* [API Usage](#api-usage)
+* [Frontend Features](#frontend-features)
+* [Screenshots](#screenshots)
+* [Installation & Setup](#installation--setup)
 * [Help & Troubleshooting](#help--troubleshooting)
 * [Contributors](#contributors)
 
 ---
 
-## Overview
+## 🚀 Overview
 
-**Faculty Finder** is an end-to-end faculty discovery platform designed to help users find academic experts using **semantic search** rather than keyword matching.
+**Faculty Finder** is an end-to-end faculty discovery platform designed to help users find academic experts using **semantic search** rather than simple keyword matching.
 
 🚀 **Live Demo (Hosted on Railway)**
 👉 [https://faculty-finder-production-507e.up.railway.app/](https://faculty-finder-production-507e.up.railway.app/)
 
-Basic Idea & Workflow
-At a high level, Faculty Finder follows a simple but powerful idea: ingest raw faculty data, enrich it using semantic embeddings, and make it easily searchable through APIs and a user-friendly interface.
+### Core Idea & Workflow
+1. **Scrape & Ingest**: Extract raw faculty profiles from institutional websites.
+2. **Clean & Transform**: Process HTML/JSON data into structured formats (CSV/SQLite).
+3. **Store**: Persist structured data in a SQLite database.
+4. **Embed**: Generate dense vector representations using MPNet for all profiles.
+5. **Search & Rerank**: Use cosine similarity + cross-encoder reranking for precise retrieval.
+6. **Deploy**: Serve results via FastAPI and a modern, responsive frontend.
 
-The project workflow is:
-
-* Recreate a reproducible Python environment
-* Scrape and ingest faculty profiles from institutional websites
-* Clean and transform raw HTML/JSON data into structured CSV and SQLite formats
-* Store structured faculty data in a SQLite database
-* Build vector embeddings for faculty profiles to enable semantic retrieval
-* Apply a recommender pipeline to rerank results based on semantic relevance
-* Expose faculty data and semantic search via FastAPI REST endpoints
-* Serve ranked results through a lightweight, publicly hosted frontend UI
 ---
 
-## System Architecture
+## 💡 Why Semantic Search?
+
+Standard keyword search fails when terminology differs (e.g., searching for "AI" might miss "Machine Learning"). **Faculty Finder** understands the **underlying meaning** and context of your query, not just exact word matches, by using dense vector embeddings and high-precision re-ranking.
+
+---
+
+## 🏗️ System Architecture
 
 ```
-Web Sources
-     ↓
-Scraper (scraper.py)
-     ↓
-Transform & Clean (transform.py)
-     ↓
-SQLite Storage (db_setup.py)
-     ↓
-Embedding Builder (build_embeddings.py)
-     ↓
-Semantic Search + Reranking (recommender.py)
-     ↓
-FastAPI Backend (main.py / semantic_api.py)
-     ↓
-Frontend UI (HTML + CSS + JS)
+[ Web Sources ] 
+      ↓
+[ Data Pipeline (Scraper.py -> transform.py -> db_setup.py) ]
+      ↓
+[ SQLite DB (faculty.db) ]
+      ↓
+[ Model Service (build_embeddings.py -> recommender.py) ]
+      ↓
+[ FastAPI Backend (main.py) ]
+      ↓
+[ Frontend UI (HTML/CSS/JS) ]
 ```
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Backend & Data
-
-* Python 3.8+
-* FastAPI
-* SQLite
-* Pandas
-* Sentence Transformers (for embeddings)
+* **Python 3.13**
+* **FastAPI**: High-performance web framework.
+* **SQLite**: Lightweight relational database.
+* **Pandas**: For data manipulation and EDA.
+* **Sentence Transformers**: MPNet (all-mpnet-base-v2) for embeddings.
+* **Cross-Encoder**: For high-precision reranking.
 
 ### Frontend
-
-* HTML5
-* TailwindCSS (CDN)
-* Vanilla JavaScript
-* Zero build / no bundler
-
-### Analysis
-
-* Jupyter Notebook (`eda.ipynb`)
+* **Vanilla HTML5 & CSS3**
+* **TailwindCSS**: For modern styling.
+* **Vanilla JavaScript**: For dynamic search and theme toggling.
 
 ---
 
-## Data Schema
+## 🧠 Skills Demonstrated
 
-### Core Fields
+* **Data Engineering & ETL**: Automated multi-stage data pipelines.
+* **Web Scraping**: Extracting structured data from messy institutional HTML.
+* **Data Cleaning**: Handling nulls, normalizing fields, and statistical analysis.
+* **Vector Embeddings**: Implementing state-of-the-art NLP models for retrieval.
+* **Semantic Retrieval**: Cosine similarity and re-ranking architectures.
+* **API Development**: Building robust RESTful services with FastAPI.
+* **Full Stack Deployment**: Zero-build frontend integration with live hosting.
 
-| Column            | Description              |
-| ----------------- | ------------------------ |
-| name              | Faculty full name        |
-| profile           | Profile URL              |
-| education         | Academic background      |
-| phone             | Contact number           |
-| address           | Office address           |
-| email             | Email ID                 |
-| specialization    | Areas of expertise       |
-| personal_links    | Scholar / personal links |
-| bio               | Professional biography   |
-| teaching          | Courses taught           |
-| research_areas    | Research interests       |
-| journal_articles  | Journal publications     |
-| conference_papers | Conference publications  |
+---
 
-### SQLite Table
+## 📦 Data Schema
 
+The SQLite database stores normalized faculty records. Core fields include:
+
+| Column | Description |
+| :--- | :--- |
+| **name** | Faculty full name |
+| **profile** | Original profile URL |
+| **education**| Academic background |
+| **phone** | Contact number |
+| **address** | Office address |
+| **email** | Email ID |
+| **specialization** | Areas of expertise |
+| **personal_links** | Scholar / personal links |
+| **bio** | Professional biography |
+| **teaching** | Courses taught |
+| **research_areas** | Research interests |
+| **publications** | List of publications |
+
+### SQLite Table Structure
 ```sql
 CREATE TABLE faculty (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -125,207 +129,190 @@ CREATE TABLE faculty (
   bio TEXT,
   teaching TEXT,
   research_areas TEXT,
-  journal_articles TEXT,
-  conference_papers TEXT
+  publications TEXT
 );
 ```
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
-```
+```bash
 FacultyFinder/
-├── main.py                 # FastAPI entry point
-├── semantic_api.py         # Semantic search endpoints
-├── recommender.py          # Embedding similarity + reranking
-├── build_embeddings.py     # Vector embedding builder
-├── pipeline.py             # End-to-end pipeline runner
-├── fetch_data.py           # Data loading helpers
-├── scraper.py              # Web scraping logic
-├── transform.py            # Data cleaning & transformation
-├── db_setup.py             # SQLite schema & insertion
-├── eda.ipynb               # Data analysis notebook
+├── main.py                 # FastAPI Main Entry Point
+├── pipeline.py             # End-to-end Pipeline Runner
+├── faculty.db              # SQLite Database
+├── requirements.txt        # Project Dependencies
 │
-├── index.html              # Frontend UI
-├── styles.css              # UI styles
-├── script.js               # UI logic
+├── data_pipeline/          # Raw Data Processing
+│   ├── Scraper.py          # Web scraping logic
+│   ├── transform.py        # Data cleaning & CSV generation
+│   ├── db_setup.py         # SQLite schema & insertion
+│   └── eda.ipynb           # Data Science Analysis (Statistics)
 │
-├── data/
-│   ├── raw_data.json
-│   └── raw_data.csv
+├── model/                  # AI & Search Logic
+│   ├── build_embeddings.py # Generates vector embeddings
+│   ├── recommender.py      # Semantic search + Reranking logic
+│   ├── artifacts/          # Saved embeddings & metadata
+│   └── semantic_api.py     # Semantic-specific logic
 │
-├── embeddings/
-│   └── faculty_embeddings.pkl
+├── frontend/               # UI Files
+│   ├── index.html          
+│   ├── styles.css          
+│   └── script.js           
 │
-└── README.md
+└── data/                   # Data Storage
+    ├── raw_data.json       # Initial scraped output
+    ├── clean_faculty_data.csv
+    └── clean_faculty_data.json
 ```
 
 ---
 
-## Pipeline Workflow
+## 🔄 Pipeline Workflow
 
 ### 1. Scraping
-
-* Extracts faculty details from institutional web pages
-* Handles inconsistent HTML layouts
+Extracts faculty data from institutional web pages and handles inconsistent HTML layouts to ensure complete data ingestion.
 
 ### 2. Transformation
-
-* Cleans text fields
-* Normalizes lists and missing values
-* Outputs CSV and JSON
+Cleans text fields, normalizes lists (e.g., teaching, publications), handles null values, and exports the data to structured CSV and JSON formats.
 
 ### 3. Storage
-
-* Inserts cleaned data into SQLite
-* Enables fast structured querying
+Loads the cleaned and structured data into a SQLite database (`faculty.db`) to enable fast, relational querying.
 
 ### 4. Embedding Generation
-
-* Builds dense vector representations for faculty profiles
-* Stores embeddings for semantic similarity search
+Creates dense vector representations using **MPNet** for all faculty profiles, enabling high-performance semantic similarity search.
 
 ---
 
-## Semantic Search & Recommender
+## 🔍 Semantic Search & Recommender
 
-* Uses **sentence-level embeddings** for semantic matching
-* Computes cosine similarity between query and faculty profiles
-* Applies reranking to surface the most relevant faculty
-* Returns ranked results with relevance scores
-
-This allows users to search using **natural language queries** such as:
-
-> "machine learning in healthcare"
+* Uses **sentence-level embeddings** for semantic matching.
+* Computes **cosine similarity** between user query and faculty profiles.
+* Applies **cross-encoder reranking** to surface the most relevant faculty with high precision.
+* Returns ranked results with relevance badges based on confidence scores.
 
 ---
 
-## API Usage
+## 📊 Data Statistics
 
-### Start Server
+Derived from comprehensive analysis in `data_pipeline/eda.ipynb`:
 
+* **Total Faculty Records**: 112
+* **Average Publications per Faculty**: 7.41 (Range: 0 - 50)
+* **Education Quality**: 84.82% of faculty hold a **PhD**.
+* **Data Availability**: 97.32% have teaching info; 16.96% have dedicated research area lists.
+
+### Column-wise Data Quality (Null Analysis)
+
+| Column | Null Count | Null Percentage |
+| :--- | :--- | :--- |
+| name | 0 | 0.00% |
+| profile | 0 | 0.00% |
+| education | 2 | 1.79% |
+| phone | 34 | 30.36% |
+| address | 35 | 31.25% |
+| email | 1 | 0.89% |
+| specialization | 0 | 0.00% |
+| personal_links | 65 | 58.04% |
+| bio | 43 | 38.39% |
+| teaching | 3 | 2.68% |
+| research_areas | 93 | 83.04% |
+| publications | 44 | 39.29% |
+
+---
+
+## 🔌 API Usage
+
+### Start the Server
 ```bash
 uvicorn main:app --reload --port 8000
 ```
 
-### Example Endpoints
+### Endpoints
 
-| Method | Endpoint         | Description             |
-| ------ | ---------------- | ----------------------- |
-| GET    | /faculty         | List all faculty        |
-| GET    | /faculty/search  | Search by name or ID    |
-| POST   | /semantic-search | Semantic faculty search |
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/` | Serves the Frontend UI |
+| **GET** | `/faculty` | Get all faculty records |
+| **GET** | `/faculty/search?query_str=...` | Keyword search across all fields |
+| **GET** | `/faculty/semantic-search?query_str=...` | AI-powered semantic (embedding) search |
 
----
-
-## Frontend
-
-The frontend is a **zero-build UI**:
-
-* Open `index.html` directly in the browser
-* Connects to FastAPI backend
-* Supports:
-
-  * Semantic search
-  * Light / Dark mode
-  * Relevance badges
-  * Loading states
-  * Responsive layout
+**Example Semantic Query:**
+`GET /faculty/semantic-search?query_str=machine learning`
 
 ---
 
-## Installation & Setup
+## 🖥️ Frontend Features
 
+* **Hybrid Search**: Automatically defaults to semantic search with keyword fallback.
+* **Modern UI**: Dark/Light mode support with smooth transitions.
+* **Relevance Ranking**: Displays "Most Relevant" badges for high-confidence matches.
+* **Responsive Design**: Optimized for both mobile and desktop views.
+
+---
+
+## 📸 Screenshots
+### Query 1 – Natural Language Processing
+<img width="1894" height="1127" alt="Screenshot 2026-02-07 133833" src="https://github.com/user-attachments/assets/9d085bb7-668b-482c-b03b-26f96ec54925" />
+
+### Query 2 – Computer Vision (Dark Mode)
+<img width="1900" height="1125" alt="Screenshot 2026-02-07 133910" src="https://github.com/user-attachments/assets/98064fae-41f9-4a89-b0b4-debe22c18390" />
+
+### Query 3 – No Matching Results
+<img width="1888" height="1123" alt="Screenshot 2026-02-07 133939" src="https://github.com/user-attachments/assets/156ff77c-e225-4d24-8389-1c298888792a" />
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # or .venv\Scripts\activate
+git clone https://github.com/angel-manoj/FacultyFinder_The_Query_Crew.git
+cd FacultyFinder_The_Query_Crew
+```
+
+### 2. Create Virtual Environment
+```powershell
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### Run Full Pipeline (Recommended)
-
+### 4. Initialize Data (Step-by-Step)
+If you need to regenerate the database and embeddings from scratch:
 ```bash
+# Step 1: Run basic pipeline (Scrape -> Clean -> Store)
 python pipeline.py --all
-```
 
-This command:
-
-* Scrapes / loads raw data
-* Cleans and transforms it
-* Loads it into SQLite
-* Builds embeddings for semantic search
-
-### Run Backend API
-
-```bash
-uvicorn main:app --reload --port 8000
+# Step 2: Build AI vector embeddings
+python model/build_embeddings.py
 ```
 
 ---
 
-## Data Statistics
+## ❓ Help & Troubleshooting
 
-Derived from `eda.ipynb`:
-
-* **Total faculty records**: 111
-* **Total attributes per faculty**: 15
-* **Unique specializations identified**: ~380+
-* **Dominant research areas**:
-
-  * Machine Learning
-  * Computer Vision
-  * Natural Language Processing
-  * Information Retrieval
-
-### Publication Insights
-
-* **Average publications per faculty**: ~3
-* **Publication range**: 0 to 60+
-
-### Data Quality Notes
-
-* Academic fields (name, teaching, specialization) are largely complete
-* Contact details (phone, address, personal links) show higher missing rates
-* Text-heavy fields show high variability, making them suitable for semantic embeddings
+* **Port 8000 already in use**: 
+  * Windows: `netstat -ano | findstr :8000` then `taskkill /F /PID <PID>`
+* **ModuleNotFoundError**: Ensure your virtual environment is activated (`.\venv\Scripts\activate`).
+* **API Error 404 on Search**: Always access the project via `http://localhost:8000` (FastAPI), not by opening the HTML file directly or via port 8001.
 
 ---
 
-## Help & Troubleshooting
+## 👥 Contributors
 
-**Port already in use**
-
-```bash
-lsof -i :8000
-kill -9 <PID>
-```
-
-**No semantic results returned**
-
-* Ensure embeddings are built using `python pipeline.py --all`
-* Check that embedding artifacts exist
-
-**Frontend not showing results**
-
-* Confirm backend is running
-* Verify API URL in `script.js`
-
----
-
-## Future Improvements
-
-* Add Dockerfile and docker-compose for one-command deployment
-* Add unit tests for pipeline and recommender components
-* Expose OpenAPI / Swagger documentation for semantic endpoints
-* Support incremental embedding updates for new faculty data
-
----
-
-## Contributors
-
-* **Deep Patel**
 * **Angel Manoj**
+* **Deep Patel**
 
 ---
-
 © 2026 – Faculty Finder | The Query Crew
