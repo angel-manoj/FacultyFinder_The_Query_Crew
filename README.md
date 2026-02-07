@@ -14,18 +14,18 @@ A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, s
 * [Data Schema](#data-schema)
 * [Project Structure](#project-structure)
 * [Pipeline Workflow](#pipeline-workflow)
-* [Semantic Search & Recommender](#semantic-search--recommender)
+* [Semantic Search & Recommender](#semantic-search-recommender)
 * [Data Statistics](#data-statistics)
 * [API Usage](#api-usage)
 * [Frontend Features](#frontend-features)
 * [Screenshots](#screenshots)
-* [Installation & Setup](#installation--setup)
-* [Help & Troubleshooting](#help--troubleshooting)
+* [Installation & Setup](#installation-setup)
+* [Help & Troubleshooting](#help-troubleshooting)
 * [Contributors](#contributors)
 
 ---
 
-## 🚀 Overview
+## <a id="overview"></a>🚀 Overview
 
 **Faculty Finder** is an end-to-end faculty discovery platform designed to help users find academic experts using **semantic search** rather than simple keyword matching.
 
@@ -42,13 +42,13 @@ A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, s
 
 ---
 
-## 💡 Why Semantic Search?
+## <a id="why-semantic-search"></a>💡 Why Semantic Search?
 
 Standard keyword search fails when terminology differs (e.g., searching for "AI" might miss "Machine Learning"). **Faculty Finder** understands the **underlying meaning** and context of your query, not just exact word matches, by using dense vector embeddings and high-precision re-ranking.
 
 ---
 
-## 🏗️ System Architecture
+## <a id="system-architecture"></a>🏗️ System Architecture
 
 ```
 [ Web Sources ] 
@@ -66,7 +66,7 @@ Standard keyword search fails when terminology differs (e.g., searching for "AI"
 
 ---
 
-## 🛠️ Tech Stack
+## <a id="tech-stack"></a>🛠️ Tech Stack
 
 ### Backend & Data
 * **Python 3.13**
@@ -83,7 +83,7 @@ Standard keyword search fails when terminology differs (e.g., searching for "AI"
 
 ---
 
-## 🧠 Skills Demonstrated
+## <a id="skills-demonstrated"></a>🧠 Skills Demonstrated
 
 * **Data Engineering & ETL**: Automated multi-stage data pipelines.
 * **Web Scraping**: Extracting structured data from messy institutional HTML.
@@ -95,7 +95,7 @@ Standard keyword search fails when terminology differs (e.g., searching for "AI"
 
 ---
 
-## 📦 Data Schema
+## <a id="data-schema"></a>📦 Data Schema
 
 The SQLite database stores normalized faculty records. Core fields include:
 
@@ -135,7 +135,7 @@ CREATE TABLE faculty (
 
 ---
 
-## 📂 Project Structure
+## <a id="project-structure"></a>📂 Project Structure
 
 ```bash
 FacultyFinder/
@@ -169,7 +169,7 @@ FacultyFinder/
 
 ---
 
-## 🔄 Pipeline Workflow
+## <a id="pipeline-workflow"></a>🔄 Pipeline Workflow
 
 ### 1. Scraping
 Extracts faculty data from institutional web pages and handles inconsistent HTML layouts to ensure complete data ingestion.
@@ -185,7 +185,7 @@ Creates dense vector representations using **MPNet** for all faculty profiles, e
 
 ---
 
-## 🔍 Semantic Search & Recommender
+## <a id="semantic-search-recommender"></a>🔍 Semantic Search & Recommender
 
 * Uses **sentence-level embeddings** for semantic matching.
 * Computes **cosine similarity** between user query and faculty profiles.
@@ -194,7 +194,7 @@ Creates dense vector representations using **MPNet** for all faculty profiles, e
 
 ---
 
-## 📊 Data Statistics
+## <a id="data-statistics"></a>📊 Data Statistics
 
 Derived from comprehensive analysis in `data_pipeline/eda.ipynb`:
 
@@ -222,7 +222,7 @@ Derived from comprehensive analysis in `data_pipeline/eda.ipynb`:
 
 ---
 
-## 🔌 API Usage
+## <a id="api-usage"></a>🔌 API Usage
 
 ### Start the Server
 ```bash
@@ -243,7 +243,7 @@ uvicorn main:app --reload --port 8000
 
 ---
 
-## 🖥️ Frontend Features
+## <a id="frontend-features"></a>🖥️ Frontend Features
 
 * **Hybrid Search**: Automatically defaults to semantic search with keyword fallback.
 * **Modern UI**: Dark/Light mode support with smooth transitions.
@@ -252,7 +252,7 @@ uvicorn main:app --reload --port 8000
 
 ---
 
-## 📸 Screenshots
+## <a id="screenshots"></a>📸 Screenshots
 ### Query 1 – Natural Language Processing
 <img width="1894" height="1127" alt="Screenshot 2026-02-07 133833" src="https://github.com/user-attachments/assets/9d085bb7-668b-482c-b03b-26f96ec54925" />
 
@@ -264,7 +264,7 @@ uvicorn main:app --reload --port 8000
 
 ---
 
-## ⚙️ Installation & Setup
+## <a id="installation-setup"></a>⚙️ Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -300,7 +300,7 @@ python model/build_embeddings.py
 
 ---
 
-## ❓ Help & Troubleshooting
+## <a id="help-troubleshooting"></a>❓ Help & Troubleshooting
 
 * **Port 8000 already in use**: 
   * Windows: `netstat -ano | findstr :8000` then `taskkill /F /PID <PID>`
@@ -309,7 +309,7 @@ python model/build_embeddings.py
 
 ---
 
-## 👥 Contributors
+## <a id="contributors"></a>👥 Contributors
 
 * **Angel Manoj**
 * **Deep Patel**
