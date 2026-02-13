@@ -44,7 +44,7 @@ A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, s
 
 ## <a id="why-semantic-search"></a>💡 Why Semantic Search?
 
-Standard keyword search fails when terminology differs (e.g., searching for "AI" might miss "Machine Learning"). **Faculty Finder** understands the **underlying meaning** and context of your query, not just exact word matches, by using dense vector embeddings and high-precision re-ranking.
+Standard keyword search fails when terminology differs. **Faculty Finder** understands the **underlying meaning** and context of your query, not just exact word matches, by using dense vector embeddings and high-precision re-ranking.
 
 ---
 
@@ -316,3 +316,4 @@ python model/build_embeddings.py
 
 ---
 © 2026 – Faculty Finder | The Query Crew
+
