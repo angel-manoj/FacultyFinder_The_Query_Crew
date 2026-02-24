@@ -21,6 +21,7 @@ A full‑stack **Big Data Engineering (BDE)** project that scrapes, processes, s
 * [Screenshots](#screenshots)
 * [Installation & Setup](#installation-setup)
 * [Help & Troubleshooting](#help-troubleshooting)
+* [References](#references)
 * [Contributors](#contributors)
 
 ---
@@ -309,6 +310,27 @@ python model/build_embeddings.py
 
 ---
 
+## <a id="references"></a>📚 References
+
+### Sentence Embeddings (MPNet)
+https://huggingface.co/sentence-transformers/all-mpnet-base-v2  
+https://arxiv.org/abs/2004.09297  
+
+### Sentence-BERT / Cross-Encoder
+https://arxiv.org/abs/1908.10084  
+https://www.sbert.net/  
+
+### FastAPI
+https://fastapi.tiangolo.com/  
+
+### SQLite
+https://www.sqlite.org/  
+
+### Hugging Face Transformers
+https://huggingface.co/docs/transformers  
+
+---
+
 ## <a id="contributors"></a>👥 Contributors
 
 * **Angel Manoj**
@@ -316,4 +338,5 @@ python model/build_embeddings.py
 
 ---
 © 2026 – Faculty Finder | The Query Crew
+
 
